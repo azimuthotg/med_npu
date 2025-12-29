@@ -25,13 +25,15 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                         </svg>
                     </a>
-                    <div class="absolute top-full left-0 mt-2 w-48 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 border border-gray-100">
+                    <div class="absolute top-full left-0 mt-2 w-56 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 border border-gray-100">
                         <a href="{% url 'about:history' %}" class="block px-4 py-3 text-gray-700 hover:bg-primary-50 hover:text-primary-600 rounded-t-lg">ประวัติความเป็นมา</a>
-                        <a href="{% url 'about:vision_mission' %}" class="block px-4 py-3 text-gray-700 hover:bg-primary-50 hover:text-primary-600">วิสัยทัศน์/พันธกิจ</a>
-                        <a href="{% url 'about:executives' %}" class="block px-4 py-3 text-gray-700 hover:bg-primary-50 hover:text-primary-600">ผู้บริหาร</a>
-                        <a href="{% url 'about:departments' %}" class="block px-4 py-3 text-gray-700 hover:bg-primary-50 hover:text-primary-600">ภาควิชา</a>
+                        <a href="{% url 'about:vision_mission' %}" class="block px-4 py-3 text-gray-700 hover:bg-primary-50 hover:text-primary-600">วิสัยทัศน์ พันธกิจ ค่านิยม</a>
+                        <a href="{% url 'about:dean_message' %}" class="block px-4 py-3 text-gray-700 hover:bg-primary-50 hover:text-primary-600">สารจากคณบดี</a>
+                        <a href="{% url 'about:executives' %}" class="block px-4 py-3 text-gray-700 hover:bg-primary-50 hover:text-primary-600">คณะผู้บริหาร</a>
                         <a href="{% url 'about:organization' %}" class="block px-4 py-3 text-gray-700 hover:bg-primary-50 hover:text-primary-600">โครงสร้างองค์กร</a>
-                        <a href="{% url 'about:personnel' %}" class="block px-4 py-3 text-gray-700 hover:bg-primary-50 hover:text-primary-600 rounded-b-lg">บุคลากร</a>
+                        <a href="{% url 'about:departments' %}" class="block px-4 py-3 text-gray-700 hover:bg-primary-50 hover:text-primary-600">ภาควิชาและหน่วยงาน</a>
+                        <a href="{% url 'about:personnel' %}" class="block px-4 py-3 text-gray-700 hover:bg-primary-50 hover:text-primary-600">บุคลากร</a>
+                        <a href="{% url 'about:annual_report' %}" class="block px-4 py-3 text-gray-700 hover:bg-primary-50 hover:text-primary-600 rounded-b-lg">รายงานประจำปี</a>
                     </div>
                 </div>
                 
@@ -131,7 +133,22 @@
         <div x-show="mobileMenu" x-transition class="lg:hidden pb-4">
             <nav class="flex flex-col gap-2">
                 <a href="{% url 'core:home' %}" class="px-4 py-2 text-gray-700 hover:bg-primary-50 rounded-lg">หน้าหลัก</a>
-                <a href="{% url 'about:index' %}" class="px-4 py-2 text-gray-700 hover:bg-primary-50 rounded-lg">เกี่ยวกับเรา</a>
+
+                <!-- About Section -->
+                <div class="px-4 py-2">
+                    <div class="text-sm font-semibold text-gray-500 mb-1">เกี่ยวกับเรา</div>
+                    <div class="pl-3 flex flex-col gap-1">
+                        <a href="{% url 'about:history' %}" class="py-1 text-gray-600 hover:text-primary-600 text-sm">ประวัติความเป็นมา</a>
+                        <a href="{% url 'about:vision_mission' %}" class="py-1 text-gray-600 hover:text-primary-600 text-sm">วิสัยทัศน์ พันธกิจ ค่านิยม</a>
+                        <a href="{% url 'about:dean_message' %}" class="py-1 text-gray-600 hover:text-primary-600 text-sm">สารจากคณบดี</a>
+                        <a href="{% url 'about:executives' %}" class="py-1 text-gray-600 hover:text-primary-600 text-sm">คณะผู้บริหาร</a>
+                        <a href="{% url 'about:organization' %}" class="py-1 text-gray-600 hover:text-primary-600 text-sm">โครงสร้างองค์กร</a>
+                        <a href="{% url 'about:departments' %}" class="py-1 text-gray-600 hover:text-primary-600 text-sm">ภาควิชาและหน่วยงาน</a>
+                        <a href="{% url 'about:personnel' %}" class="py-1 text-gray-600 hover:text-primary-600 text-sm">บุคลากร</a>
+                        <a href="{% url 'about:annual_report' %}" class="py-1 text-gray-600 hover:text-primary-600 text-sm">รายงานประจำปี</a>
+                    </div>
+                </div>
+
                 <a href="{% url 'education:index' %}" class="px-4 py-2 text-gray-700 hover:bg-primary-50 rounded-lg">การศึกษา</a>
                 <a href="{% url 'core:research_services' %}" class="px-4 py-2 text-gray-700 hover:bg-primary-50 rounded-lg">วิจัยและบริการวิชาการ</a>
                 <div class="px-4 py-2">

@@ -25,24 +25,21 @@
     <div class="container mx-auto px-4">
         <div class="grid lg:grid-cols-4 gap-8">
             <!-- Sidebar -->
-            <aside class="lg:col-span-1">
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 sticky top-24">
-                    <h3 class="font-bold text-gray-800 mb-4">เกี่ยวกับคณะ</h3>
-                    <nav class="space-y-2">
-                        <a href="{% url 'about:history' %}" class="block px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-50 transition">ประวัติความเป็นมา</a>
-                        <a href="{% url 'about:vision_mission' %}" class="block px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-50 transition">วิสัยทัศน์/พันธกิจ</a>
-                        <a href="{% url 'about:executives' %}" class="block px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-50 transition">ผู้บริหาร</a>
-                        <a href="{% url 'about:departments' %}" class="block px-4 py-2 rounded-lg bg-primary-50 text-primary-600 font-medium">ภาควิชา</a>
-                        <a href="{% url 'about:organization' %}" class="block px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-50 transition">โครงสร้างองค์กร</a>
-                        <a href="{% url 'about:personnel' %}" class="block px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-50 transition">บุคลากร</a>
-                    </nav>
-                </div>
-            </aside>
+            {% include 'about/components/sidebar.html' %}
 
             <!-- Main Content -->
             <div class="lg:col-span-3">
-        <div class="grid md:grid-cols-2 gap-6">
-            {% for dept in departments %}
+                <!-- ภาควิชาพรีคลินิก -->
+                <div class="mb-12">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center">
+                            <span class="text-2xl">🔬</span>
+                        </div>
+                        <h2 class="text-2xl font-bold text-gray-800">ภาควิชาพรีคลินิก</h2>
+                        <span class="text-sm text-gray-500">(Pre-clinical Sciences)</span>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        {% for dept in preclinical_depts %}
             <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 card-hover">
                 <div class="flex items-start gap-4">
                     <div class="w-14 h-14 bg-primary-100 rounded-xl flex items-center justify-center flex-shrink-0">
@@ -66,16 +63,107 @@
                     </div>
                 </div>
             </div>
-            {% empty %}
-            <div class="col-span-3 text-center py-12">
-                <div class="w-24 h-24 bg-gray-100 rounded-full mx-auto mb-4 flex items-center justify-center">
-                    <span class="text-4xl">🏢</span>
+                        {% endfor %}
+                    </div>
                 </div>
-                <p class="text-gray-500">ยังไม่มีข้อมูลภาควิชา</p>
-                <p class="text-gray-400 text-sm mt-2">กรุณาเพิ่มข้อมูลผ่านระบบ Admin</p>
-            </div>
-            {% endfor %}
-        </div>
+
+                <!-- ภาควิชาคลินิก -->
+                <div class="mb-12">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center">
+                            <span class="text-2xl">🏥</span>
+                        </div>
+                        <h2 class="text-2xl font-bold text-gray-800">ภาควิชาคลินิก</h2>
+                        <span class="text-sm text-gray-500">(Clinical Sciences)</span>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        {% for dept in clinical_depts %}
+                        <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 card-hover">
+                            <div class="flex items-start gap-4">
+                                <div class="w-14 h-14 bg-primary-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                                    <span class="text-2xl">🏥</span>
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="font-bold text-gray-800 mb-1">{{ dept.name }}</h3>
+                                    {% if dept.name_en %}
+                                    <p class="text-gray-400 text-sm mb-3">{{ dept.name_en }}</p>
+                                    {% endif %}
+                                    {% if dept.description %}
+                                    <p class="text-gray-600 text-sm mb-3">{{ dept.description }}</p>
+                                    {% endif %}
+                                    {% if dept.head %}
+                                    <p class="text-gray-600 text-sm">
+                                        <span class="font-medium">หัวหน้า:</span> {{ dept.head.full_name }}
+                                    </p>
+                                    {% endif %}
+                                    {% if dept.phone %}
+                                    <p class="text-gray-500 text-sm mt-2">
+                                        <span class="font-medium">โทร:</span> {{ dept.phone }}
+                                    </p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- ภาควิชาการแพทย์แผนไทย -->
+                <div class="mb-8">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 bg-amber-100 rounded-xl flex items-center justify-center">
+                            <span class="text-2xl">🌿</span>
+                        </div>
+                        <h2 class="text-2xl font-bold text-gray-800">ภาควิชาการแพทย์แผนไทย</h2>
+                        <span class="text-sm text-gray-500">(Thai Traditional Medicine)</span>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        {% for dept in thai_medicine_depts %}
+                        <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 card-hover">
+                            <div class="flex items-start gap-4">
+                                <div class="w-14 h-14 bg-primary-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                                    <span class="text-2xl">🌿</span>
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="font-bold text-gray-800 mb-1">{{ dept.name }}</h3>
+                                    {% if dept.name_en %}
+                                    <p class="text-gray-400 text-sm mb-3">{{ dept.name_en }}</p>
+                                    {% endif %}
+                                    {% if dept.description %}
+                                    <p class="text-gray-600 text-sm mb-3">{{ dept.description }}</p>
+                                    {% endif %}
+                                    {% if dept.head %}
+                                    <p class="text-gray-600 text-sm">
+                                        <span class="font-medium">หัวหน้า:</span> {{ dept.head.full_name }}
+                                    </p>
+                                    {% endif %}
+                                    {% if dept.phone %}
+                                    <p class="text-gray-500 text-sm mt-2">
+                                        <span class="font-medium">โทร:</span> {{ dept.phone }}
+                                    </p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Info Note -->
+                <div class="mt-8 p-6 bg-blue-50 rounded-xl border-l-4 border-blue-500">
+                    <div class="flex gap-3">
+                        <svg class="w-6 h-6 text-blue-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <div>
+                            <h4 class="font-bold text-blue-900 mb-2">หมายเหตุ</h4>
+                            <p class="text-blue-800 text-sm">
+                                คณะแพทยศาสตร์ มหาวิทยาลัยนครพนม มุ่งเน้นการผลิตแพทย์เพื่อชุมชน ด้วยหลักสูตรที่เน้นระบบบริการปฐมภูมิ
+                                พัฒนาบุคลากรทางการแพทย์ที่มีคุณภาพ และยกระดับการบริการสุขภาพในภาคตะวันออกเฉียงเหนือตอนบน
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

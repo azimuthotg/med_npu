@@ -25,83 +25,40 @@
     <div class="container mx-auto px-4">
         <div class="grid lg:grid-cols-4 gap-8">
             <!-- Sidebar -->
-            <aside class="lg:col-span-1">
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 sticky top-24">
-                    <h3 class="font-bold text-gray-800 mb-4">เกี่ยวกับคณะ</h3>
-                    <nav class="space-y-2">
-                        <a href="{% url 'about:history' %}" class="block px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-50 transition">ประวัติความเป็นมา</a>
-                        <a href="{% url 'about:vision_mission' %}" class="block px-4 py-2 rounded-lg bg-primary-50 text-primary-600 font-medium">วิสัยทัศน์/พันธกิจ</a>
-                        <a href="{% url 'about:executives' %}" class="block px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-50 transition">ผู้บริหาร</a>
-                        <a href="{% url 'about:departments' %}" class="block px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-50 transition">ภาควิชา</a>
-                        <a href="{% url 'about:organization' %}" class="block px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-50 transition">โครงสร้างองค์กร</a>
-                        <a href="{% url 'about:personnel' %}" class="block px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-50 transition">บุคลากร</a>
-                    </nav>
-                </div>
-            </aside>
+            {% include 'about/components/sidebar.html' %}
             
             <!-- Main Content -->
-            <div class="lg:col-span-3 space-y-8">
-                <!-- Vision -->
-                <div class="bg-gradient-to-br from-primary-500 to-primary-700 rounded-2xl p-8 text-white">
-                    <div class="flex items-center gap-4 mb-6">
-                        <div class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center">
-                            <span class="text-4xl">🎯</span>
+            <div class="lg:col-span-3">
+                <!-- Notice Banner -->
+                <div class="bg-gradient-to-r from-emerald-50 to-teal-50 border-l-4 border-emerald-500 rounded-xl p-6 mb-8 shadow-sm">
+                    <div class="flex items-start gap-4">
+                        <div class="flex-shrink-0">
+                            <svg class="w-8 h-8 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
                         </div>
-                        <h2 class="text-2xl font-bold">วิสัยทัศน์ (Vision)</h2>
+                        <div class="flex-1">
+                            <h3 class="text-lg font-bold text-emerald-900 mb-2">🔄 อยู่ระหว่างการดำเนินการ</h3>
+                            <p class="text-emerald-800 mb-2">
+                                ขณะนี้อยู่ระหว่างการจัดเตรียมข้อมูลวิสัยทัศน์และพันธกิจ คณะแพทยศาสตร์ มหาวิทยาลัยนครพนม
+                            </p>
+                            <p class="text-emerald-700 text-sm">
+                                ข้อมูลจะถูกเพิ่มเติมและอัพเดทในเร็วๆ นี้
+                            </p>
+                        </div>
                     </div>
-                    <p class="text-xl leading-relaxed text-primary-100">
-                        "เป็นสถาบันผลิตแพทย์ชั้นนำในภาคตะวันออกเฉียงเหนือ 
-                        ที่มุ่งเน้นการผลิตแพทย์เพื่อชุมชนอย่างมีคุณภาพ"
+                </div>
+
+                <!-- Empty State -->
+                <div class="bg-white rounded-2xl p-12 text-center shadow-sm border border-gray-100">
+                    <div class="w-24 h-24 bg-emerald-100 rounded-full mx-auto mb-4 flex items-center justify-center">
+                        <span class="text-5xl">🎯</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">กำลังรวบรวมข้อมูล</h3>
+                    <p class="text-gray-600 mb-6 max-w-md mx-auto">
+                        ข้อมูลวิสัยทัศน์และพันธกิจกำลังอยู่ระหว่างการจัดเตรียม<br>
+                        ติดตามได้ในเร็วๆ นี้
                     </p>
-                </div>
-                
-                <!-- Mission -->
-                <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
-                    <div class="flex items-center gap-4 mb-6">
-                        <div class="w-16 h-16 bg-primary-100 rounded-2xl flex items-center justify-center">
-                            <span class="text-4xl">🚀</span>
-                        </div>
-                        <h2 class="text-2xl font-bold text-gray-800">พันธกิจ (Mission)</h2>
-                    </div>
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <div class="p-6 bg-gray-50 rounded-xl">
-                            <div class="w-10 h-10 bg-primary-500 text-white rounded-lg flex items-center justify-center font-bold mb-4">1</div>
-                            <h3 class="font-bold text-gray-800 mb-2">ผลิตบัณฑิตแพทย์</h3>
-                            <p class="text-gray-600 text-sm">ผลิตบัณฑิตแพทย์ที่มีความรู้ ความสามารถ มีคุณธรรม จริยธรรม</p>
-                        </div>
-                        <div class="p-6 bg-gray-50 rounded-xl">
-                            <div class="w-10 h-10 bg-primary-500 text-white rounded-lg flex items-center justify-center font-bold mb-4">2</div>
-                            <h3 class="font-bold text-gray-800 mb-2">วิจัยและนวัตกรรม</h3>
-                            <p class="text-gray-600 text-sm">สร้างงานวิจัยและนวัตกรรมทางการแพทย์เพื่อชุมชน</p>
-                        </div>
-                        <div class="p-6 bg-gray-50 rounded-xl">
-                            <div class="w-10 h-10 bg-primary-500 text-white rounded-lg flex items-center justify-center font-bold mb-4">3</div>
-                            <h3 class="font-bold text-gray-800 mb-2">บริการวิชาการ</h3>
-                            <p class="text-gray-600 text-sm">ให้บริการวิชาการและบริการสุขภาพแก่ชุมชน</p>
-                        </div>
-                        <div class="p-6 bg-gray-50 rounded-xl">
-                            <div class="w-10 h-10 bg-primary-500 text-white rounded-lg flex items-center justify-center font-bold mb-4">4</div>
-                            <h3 class="font-bold text-gray-800 mb-2">ทำนุบำรุงศิลปวัฒนธรรม</h3>
-                            <p class="text-gray-600 text-sm">อนุรักษ์และส่งเสริมศิลปวัฒนธรรมท้องถิ่น</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Core Values -->
-                <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
-                    <div class="flex items-center gap-4 mb-6">
-                        <div class="w-16 h-16 bg-primary-100 rounded-2xl flex items-center justify-center">
-                            <span class="text-4xl">💎</span>
-                        </div>
-                        <h2 class="text-2xl font-bold text-gray-800">ค่านิยมหลัก (Core Values)</h2>
-                    </div>
-                    <div class="flex flex-wrap gap-3">
-                        <span class="px-4 py-2 bg-primary-100 text-primary-700 rounded-full font-medium">ความเป็นเลิศ</span>
-                        <span class="px-4 py-2 bg-primary-100 text-primary-700 rounded-full font-medium">คุณธรรม</span>
-                        <span class="px-4 py-2 bg-primary-100 text-primary-700 rounded-full font-medium">จิตสาธารณะ</span>
-                        <span class="px-4 py-2 bg-primary-100 text-primary-700 rounded-full font-medium">ความร่วมมือ</span>
-                        <span class="px-4 py-2 bg-primary-100 text-primary-700 rounded-full font-medium">นวัตกรรม</span>
-                    </div>
                 </div>
             </div>
         </div>

@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}แพทย์ไทยประยุกต์ - {{ SITE_NAME }}{% endblock %}
+{% block title %}บุคลากรแพทย์แผนไทย - {{ SITE_NAME }}{% endblock %}
 
 {% block content %}
 <!-- Header -->
@@ -14,11 +14,11 @@
                 <li>/</li>
                 <li><a href="{% url 'about:personnel' %}" class="hover:text-primary-500">บุคลากร</a></li>
                 <li>/</li>
-                <li class="text-gray-800">แพทย์ไทยประยุกต์</li>
+                <li class="text-gray-800">แพทย์แผนไทย</li>
             </ol>
         </nav>
-        <h1 class="text-3xl font-bold text-gray-800 mb-2">แพทย์แผนไทยประยุกต์</h1>
-        <p class="text-gray-500">บุคลากรสาขาแพทย์แผนไทยและการแพทย์ทางเลือก</p>
+        <h1 class="text-3xl font-bold text-gray-800 mb-2">บุคลากรแพทย์แผนไทย</h1>
+        <p class="text-gray-500">แพทย์แผนไทยประยุกต์และบุคลากรทางการแพทย์แผนไทย</p>
     </div>
 </section>
 
@@ -27,84 +27,71 @@
     <div class="container mx-auto px-4">
         <div class="grid lg:grid-cols-4 gap-8">
             <!-- Sidebar -->
-            <aside class="lg:col-span-1">
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 sticky top-24">
-                    <h3 class="font-bold text-gray-800 mb-4">เกี่ยวกับคณะ</h3>
-                    <nav class="space-y-2">
-                        <a href="{% url 'about:history' %}" class="block px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-50 transition">ประวัติความเป็นมา</a>
-                        <a href="{% url 'about:vision_mission' %}" class="block px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-50 transition">วิสัยทัศน์/พันธกิจ</a>
-                        <a href="{% url 'about:executives' %}" class="block px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-50 transition">ผู้บริหาร</a>
-                        <a href="{% url 'about:departments' %}" class="block px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-50 transition">ภาควิชา</a>
-                        <a href="{% url 'about:organization' %}" class="block px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-50 transition">โครงสร้างองค์กร</a>
-                        <a href="{% url 'about:personnel' %}" class="block px-4 py-2 rounded-lg bg-primary-50 text-primary-600 font-medium">บุคลากร</a>
-                    </nav>
-                </div>
-            </aside>
+            {% include 'about/components/sidebar.html' %}
 
             <!-- Main Content -->
             <div class="lg:col-span-3">
-                <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
-                    <div class="prose prose-lg max-w-none">
-                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
-                            <p class="text-blue-800 mb-0">
-                                <strong>📌 หน้านี้อยู่ระหว่างการพัฒนา</strong><br>
-                                ข้อมูลบุคลากรสาขาแพทย์แผนไทยประยุกต์จะถูกเพิ่มเติมในอนาคต
-                            </p>
+                <!-- Notice Banner -->
+                <div class="bg-gradient-to-r from-amber-50 to-orange-50 border-l-4 border-amber-500 rounded-xl p-6 mb-8 shadow-sm">
+                    <div class="flex items-start gap-4">
+                        <div class="flex-shrink-0">
+                            <svg class="w-8 h-8 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
                         </div>
-
-                        <h2 class="text-2xl font-bold text-primary-600 mb-6">แพทย์แผนไทยประยุกต์</h2>
-
-                        <p class="text-gray-600 leading-relaxed mb-6">
-                            สาขาวิชาแพทย์แผนไทยประยุกต์ คณะแพทยศาสตร์ มหาวิทยาลัยนครพนม มุ่งเน้นการผสมผสานภูมิปัญญาการแพทย์แผนไทยกับการแพทย์สมัยใหม่
-                        </p>
-
-                        <h3 class="text-xl font-bold text-gray-800 mb-4">สาขาวิชา</h3>
-
-                        <h4 class="text-lg font-semibold text-gray-800 mb-3">🌿 การแพทย์แผนไทย</h4>
-                        <ul class="mb-6">
-                            <li>ทฤษฎีและหลักการแพทย์แผนไทย</li>
-                            <li>เภสัชกรรมไทย</li>
-                            <li>สมุนไพรไทย</li>
-                            <li>การผลิตยาสมุนไพร</li>
-                        </ul>
-
-                        <h4 class="text-lg font-semibold text-gray-800 mb-3">💆 การบำบัดแผนไทย</h4>
-                        <ul class="mb-6">
-                            <li>การนวดแผนไทย</li>
-                            <li>การประคบ</li>
-                            <li>การอบไอน้ำ</li>
-                            <li>การใช้สมุนไพรประกอบการบำบัด</li>
-                        </ul>
-
-                        <h4 class="text-lg font-semibold text-gray-800 mb-3">🔬 การวิจัยและพัฒนา</h4>
-                        <ul class="mb-6">
-                            <li>วิจัยสมุนไพรไทย</li>
-                            <li>พัฒนาผลิตภัณฑ์สุขภาพ</li>
-                            <li>การทดสอบประสิทธิภาพและความปลอดภัย</li>
-                            <li>การบูรณาการแพทย์แผนไทยกับการแพทย์แผนปัจจุบัน</li>
-                        </ul>
-
-                        <h3 class="text-xl font-bold text-gray-800 mb-4">การให้บริการ</h3>
-                        <div class="grid md:grid-cols-2 gap-4 mb-6 not-prose">
-                            <div class="bg-gray-50 rounded-lg p-4">
-                                <h5 class="font-semibold text-gray-800 mb-2">📚 การเรียนการสอน</h5>
-                                <p class="text-sm text-gray-600">สอนนักศึกษาแพทย์เรื่องแพทย์แผนไทยและแพทย์ทางเลือก</p>
-                            </div>
-                            <div class="bg-gray-50 rounded-lg p-4">
-                                <h5 class="font-semibold text-gray-800 mb-2">🏥 คลินิกแพทย์แผนไทย</h5>
-                                <p class="text-sm text-gray-600">บริการรักษาแบบแพทย์แผนไทยและบูรณาการ</p>
-                            </div>
-                            <div class="bg-gray-50 rounded-lg p-4">
-                                <h5 class="font-semibold text-gray-800 mb-2">🔬 ห้องปฏิบัติการสมุนไพร</h5>
-                                <p class="text-sm text-gray-600">วิจัยและพัฒนาผลิตภัณฑ์สมุนไพร</p>
-                            </div>
-                            <div class="bg-gray-50 rounded-lg p-4">
-                                <h5 class="font-semibold text-gray-800 mb-2">👨‍🏫 อบรมชุมชน</h5>
-                                <p class="text-sm text-gray-600">ถ่ายทอดความรู้แพทย์แผนไทยสู่ชุมชน</p>
-                            </div>
+                        <div class="flex-1">
+                            <h3 class="text-lg font-bold text-amber-900 mb-2">🔄 อยู่ระหว่างการดำเนินการ</h3>
+                            <p class="text-amber-800 mb-2">
+                                ขณะนี้อยู่ระหว่างการรวบรวมข้อมูลบุคลากรแพทย์แผนไทย คณะแพทยศาสตร์ มหาวิทยาลัยนครพนม
+                            </p>
+                            <p class="text-amber-700 text-sm">
+                                ข้อมูลจะถูกเพิ่มเติมและอัพเดทในเร็วๆ นี้ หากมีข้อสงสัยกรุณาติดต่อ งานบริหารงานบุคคล
+                            </p>
                         </div>
                     </div>
                 </div>
+
+                <!-- Personnel Grid -->
+                {% if personnel_list %}
+                <div class="grid md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8">
+                    {% for person in personnel_list %}
+                    <div class="bg-white rounded-xl shadow-md border border-gray-100 overflow-hidden hover:shadow-xl transition-all group">
+                        <!-- Photo -->
+                        <div class="relative aspect-[3/4] overflow-hidden bg-gradient-to-br from-amber-100 to-amber-50">
+                            {% if person.photo %}
+                            <img src="{{ person.photo.url }}" alt="{{ person.full_name }}" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300">
+                            <div class="absolute inset-0 bg-gradient-to-t from-amber-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            {% else %}
+                            <div class="w-full h-full flex items-center justify-center">
+                                <span class="text-6xl text-amber-300">🌿</span>
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Info -->
+                        <div class="p-4">
+                            <h3 class="font-bold text-gray-800 text-sm mb-1 line-clamp-2">{{ person.full_name }}</h3>
+                            <p class="text-primary-600 text-xs mb-2">{{ person.position }}</p>
+                            {% if person.department %}
+                            <p class="text-gray-500 text-xs">{{ person.department.name }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <!-- Empty State -->
+                <div class="bg-white rounded-2xl p-12 text-center shadow-sm border border-gray-100">
+                    <div class="w-24 h-24 bg-amber-100 rounded-full mx-auto mb-4 flex items-center justify-center">
+                        <span class="text-5xl">🌿</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">กำลังรวบรวมข้อมูล</h3>
+                    <p class="text-gray-600 mb-6 max-w-md mx-auto">
+                        ข้อมูลบุคลากรแพทย์แผนไทยกำลังอยู่ระหว่างการจัดเตรียม<br>
+                        ติดตามได้ในเร็วๆ นี้
+                    </p>
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>

@@ -1,0 +1,49 @@
+<!-- About Sidebar Navigation -->
+<aside class="lg:col-span-1">
+    <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 sticky top-24">
+        <h3 class="font-bold text-gray-800 mb-4">เกี่ยวกับคณะ</h3>
+        <nav class="space-y-2">
+            <a href="{% url 'about:history' %}" class="block px-4 py-2 rounded-lg {% if request.resolver_match.url_name == 'history' %}bg-primary-50 text-primary-600 font-medium{% else %}text-gray-600 hover:bg-gray-50{% endif %} transition">
+                ประวัติความเป็นมา
+            </a>
+            <a href="{% url 'about:vision_mission' %}" class="block px-4 py-2 rounded-lg {% if request.resolver_match.url_name == 'vision_mission' %}bg-primary-50 text-primary-600 font-medium{% else %}text-gray-600 hover:bg-gray-50{% endif %} transition">
+                วิสัยทัศน์ พันธกิจ ค่านิยม
+            </a>
+            <a href="{% url 'about:dean_message' %}" class="block px-4 py-2 rounded-lg {% if request.resolver_match.url_name == 'dean_message' %}bg-primary-50 text-primary-600 font-medium{% else %}text-gray-600 hover:bg-gray-50{% endif %} transition">
+                สารจากคณบดี
+            </a>
+            <a href="{% url 'about:executives' %}" class="block px-4 py-2 rounded-lg {% if request.resolver_match.url_name == 'executives' %}bg-primary-50 text-primary-600 font-medium{% else %}text-gray-600 hover:bg-gray-50{% endif %} transition">
+                คณะผู้บริหาร
+            </a>
+            <a href="{% url 'about:organization' %}" class="block px-4 py-2 rounded-lg {% if request.resolver_match.url_name == 'organization' %}bg-primary-50 text-primary-600 font-medium{% else %}text-gray-600 hover:bg-gray-50{% endif %} transition">
+                โครงสร้างองค์กร
+            </a>
+            <a href="{% url 'about:departments' %}" class="block px-4 py-2 rounded-lg {% if request.resolver_match.url_name == 'departments' %}bg-primary-50 text-primary-600 font-medium{% else %}text-gray-600 hover:bg-gray-50{% endif %} transition">
+                ภาควิชาและหน่วยงาน
+            </a>
+
+            <!-- Submenu: บุคลากร -->
+            <div class="border-l-2 border-gray-200 ml-4 pl-4 space-y-1">
+                <a href="{% url 'about:personnel' %}" class="block px-3 py-1.5 rounded text-sm {% if request.resolver_match.url_name == 'personnel' %}bg-primary-50 text-primary-600 font-medium{% else %}text-gray-600 hover:bg-gray-50{% endif %} transition">
+                    บุคลากร
+                </a>
+                <a href="{% url 'about:personnel_preclinical' %}" class="block px-3 py-1.5 rounded text-sm {% if request.resolver_match.url_name == 'personnel_preclinical' %}bg-primary-50 text-primary-600 font-medium{% else %}text-gray-500 hover:bg-gray-50{% endif %} transition">
+                    ├─ พรีคลินิก
+                </a>
+                <a href="{% url 'about:personnel_clinical' %}" class="block px-3 py-1.5 rounded text-sm {% if request.resolver_match.url_name == 'personnel_clinical' %}bg-primary-50 text-primary-600 font-medium{% else %}text-gray-500 hover:bg-gray-50{% endif %} transition">
+                    ├─ คลินิก
+                </a>
+                <a href="{% url 'about:personnel_thai_medicine' %}" class="block px-3 py-1.5 rounded text-sm {% if request.resolver_match.url_name == 'personnel_thai_medicine' %}bg-primary-50 text-primary-600 font-medium{% else %}text-gray-500 hover:bg-gray-50{% endif %} transition">
+                    ├─ แพทย์แผนไทย
+                </a>
+                <a href="{% url 'about:personnel_supporting_staff' %}" class="block px-3 py-1.5 rounded text-sm {% if request.resolver_match.url_name == 'personnel_supporting_staff' %}bg-primary-50 text-primary-600 font-medium{% else %}text-gray-500 hover:bg-gray-50{% endif %} transition">
+                    └─ สายสนับสนุน
+                </a>
+            </div>
+
+            <a href="{% url 'about:annual_report' %}" class="block px-4 py-2 rounded-lg {% if request.resolver_match.url_name == 'annual_report' %}bg-primary-50 text-primary-600 font-medium{% else %}text-gray-600 hover:bg-gray-50{% endif %} transition">
+                รายงานประจำปี
+            </a>
+        </nav>
+    </div>
+</aside>

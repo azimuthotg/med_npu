@@ -1,5 +1,5 @@
 from django.views.generic import TemplateView, ListView
-from .models import Executive, Department
+from .models import Executive, Department, Personnel
 
 
 class AboutIndexView(TemplateView):
@@ -15,6 +15,16 @@ class HistoryView(TemplateView):
 class VisionMissionView(TemplateView):
     """หน้าวิสัยทัศน์/พันธกิจ"""
     template_name = 'about/vision_mission.html'
+
+
+class DeanMessageView(TemplateView):
+    """หน้าสารจากคณบดี"""
+    template_name = 'about/dean_message.html'
+
+
+class AnnualReportView(TemplateView):
+    """หน้ารายงานประจำปี"""
+    template_name = 'about/annual_report.html'
 
 
 class ExecutivesView(ListView):
@@ -40,9 +50,17 @@ class DepartmentsView(ListView):
     model = Department
     template_name = 'about/departments.html'
     context_object_name = 'departments'
-    
+
     def get_queryset(self):
         return Department.objects.filter(is_active=True).order_by('order')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Group departments by type
+        context['preclinical_depts'] = self.get_queryset().filter(department_type='preclinical')
+        context['clinical_depts'] = self.get_queryset().filter(department_type='clinical')
+        context['thai_medicine_depts'] = self.get_queryset().filter(department_type='thai_medicine')
+        return context
 
 
 class OrganizationView(TemplateView):
@@ -59,24 +77,56 @@ class PersonnelIndexView(TemplateView):
     template_name = 'about/personnel/index.html'
 
 
-class PersonnelPreclinicalView(TemplateView):
+class PersonnelPreclinicalView(ListView):
     """บุคลากรชั้นปรีคลินิก"""
+    model = Personnel
     template_name = 'about/personnel/preclinical.html'
+    context_object_name = 'personnel_list'
+
+    def get_queryset(self):
+        return Personnel.objects.filter(
+            personnel_type='preclinical',
+            is_active=True
+        ).order_by('order')
 
 
-class PersonnelClinicalView(TemplateView):
+class PersonnelClinicalView(ListView):
     """บุคลากรชั้นคลินิก"""
+    model = Personnel
     template_name = 'about/personnel/clinical.html'
+    context_object_name = 'personnel_list'
+
+    def get_queryset(self):
+        return Personnel.objects.filter(
+            personnel_type='clinical',
+            is_active=True
+        ).order_by('order')
 
 
-class PersonnelThaiMedicineView(TemplateView):
+class PersonnelThaiMedicineView(ListView):
     """แพทย์ไทยประยุกต์"""
+    model = Personnel
     template_name = 'about/personnel/thai_medicine.html'
+    context_object_name = 'personnel_list'
+
+    def get_queryset(self):
+        return Personnel.objects.filter(
+            personnel_type='thai_medicine',
+            is_active=True
+        ).order_by('order')
 
 
-class PersonnelSupportingStaffView(TemplateView):
+class PersonnelSupportingStaffView(ListView):
     """บุคลากรสายสนับสนุน"""
+    model = Personnel
     template_name = 'about/personnel/supporting_staff.html'
+    context_object_name = 'personnel_list'
+
+    def get_queryset(self):
+        return Personnel.objects.filter(
+            personnel_type='supporting_staff',
+            is_active=True
+        ).order_by('order')
 
 
 class FacultyBoardView(TemplateView):

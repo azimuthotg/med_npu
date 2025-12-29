@@ -27,98 +27,71 @@
     <div class="container mx-auto px-4">
         <div class="grid lg:grid-cols-4 gap-8">
             <!-- Sidebar -->
-            <aside class="lg:col-span-1">
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 sticky top-24">
-                    <h3 class="font-bold text-gray-800 mb-4">เกี่ยวกับคณะ</h3>
-                    <nav class="space-y-2">
-                        <a href="{% url 'about:history' %}" class="block px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-50 transition">ประวัติความเป็นมา</a>
-                        <a href="{% url 'about:vision_mission' %}" class="block px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-50 transition">วิสัยทัศน์/พันธกิจ</a>
-                        <a href="{% url 'about:executives' %}" class="block px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-50 transition">ผู้บริหาร</a>
-                        <a href="{% url 'about:departments' %}" class="block px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-50 transition">ภาควิชา</a>
-                        <a href="{% url 'about:organization' %}" class="block px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-50 transition">โครงสร้างองค์กร</a>
-                        <a href="{% url 'about:personnel' %}" class="block px-4 py-2 rounded-lg bg-primary-50 text-primary-600 font-medium">บุคลากร</a>
-                    </nav>
-                </div>
-            </aside>
+            {% include 'about/components/sidebar.html' %}
 
             <!-- Main Content -->
             <div class="lg:col-span-3">
-                <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
-                    <div class="prose prose-lg max-w-none">
-                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
-                            <p class="text-blue-800 mb-0">
-                                <strong>📌 หน้านี้อยู่ระหว่างการพัฒนา</strong><br>
-                                ข้อมูลบุคลากรชั้นปรีคลินิกจะถูกเพิ่มเติมในอนาคต
-                            </p>
+                <!-- Notice Banner -->
+                <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border-l-4 border-blue-500 rounded-xl p-6 mb-8 shadow-sm">
+                    <div class="flex items-start gap-4">
+                        <div class="flex-shrink-0">
+                            <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
                         </div>
-
-                        <h2 class="text-2xl font-bold text-primary-600 mb-6">บุคลากรชั้นปรีคลินิก</h2>
-
-                        <p class="text-gray-600 leading-relaxed mb-6">
-                            บุคลากรชั้นปรีคลินิก คณะแพทยศาสตร์ มหาวิทยาลัยนครพนม ประกอบด้วยอาจารย์และบุคลากรที่มีความเชี่ยวชาญในสาขาวิชาพื้นฐานทางการแพทย์
-                        </p>
-
-                        <h3 class="text-xl font-bold text-gray-800 mb-4">กลุ่มวิชา</h3>
-
-                        <h4 class="text-lg font-semibold text-gray-800 mb-3">🔬 กลุ่มวิชากายวิภาคศาสตร์</h4>
-                        <ul class="mb-6">
-                            <li>กายวิภาคศาสตร์มหพัคและจุลพัค</li>
-                            <li>พยาธิกายวิภาค</li>
-                            <li>นิติเวชศาสตร์</li>
-                        </ul>
-
-                        <h4 class="text-lg font-semibold text-gray-800 mb-3">🧬 กลุ่มวิชาสรีรวิทยา</h4>
-                        <ul class="mb-6">
-                            <li>สรีรวิทยาทั่วไป</li>
-                            <li>ชีวเคมีทางการแพทย์</li>
-                            <li>ชีววิทยาโมเลกุล</li>
-                        </ul>
-
-                        <h4 class="text-lg font-semibold text-gray-800 mb-3">🦠 กลุ่มวิชาจุลชีววิทยา</h4>
-                        <ul class="mb-6">
-                            <li>แบคทีเรียวิทยา</li>
-                            <li>ไวรัสวิทยา</li>
-                            <li>ปรสิตวิทยา</li>
-                            <li>เชื้อราและภูมิคุ้มกันวิทยา</li>
-                        </ul>
-
-                        <h4 class="text-lg font-semibold text-gray-800 mb-3">💊 กลุ่มวิชาเภสัชวิทยา</h4>
-                        <ul class="mb-6">
-                            <li>เภสัชวิทยาทั่วไป</li>
-                            <li>พิษวิทยา</li>
-                            <li>การบำบัดด้วยยา</li>
-                        </ul>
-
-                        <h4 class="text-lg font-semibold text-gray-800 mb-3">🧪 กลุ่มวิชาพยาธิวิทยาคลินิก</h4>
-                        <ul class="mb-6">
-                            <li>พยาธิวิทยาคลินิก</li>
-                            <li>จุลชีววิทยาคลินิก</li>
-                            <li>โลหิตวิทยา</li>
-                        </ul>
-
-                        <h3 class="text-xl font-bold text-gray-800 mb-4">ภาระงาน</h3>
-                        <div class="bg-gray-50 rounded-xl p-6">
-                            <ul class="mb-0 space-y-2">
-                                <li class="flex items-start gap-2">
-                                    <span class="text-primary-600 mt-1">•</span>
-                                    <span>การเรียนการสอนนักศึกษาแพทย์ชั้นปรีคลินิก (ปีที่ 1-3)</span>
-                                </li>
-                                <li class="flex items-start gap-2">
-                                    <span class="text-primary-600 mt-1">•</span>
-                                    <span>การวิจัยทางวิทยาศาสตร์การแพทย์</span>
-                                </li>
-                                <li class="flex items-start gap-2">
-                                    <span class="text-primary-600 mt-1">•</span>
-                                    <span>การบริการวิชาการแก่ชุมชน</span>
-                                </li>
-                                <li class="flex items-start gap-2">
-                                    <span class="text-primary-600 mt-1">•</span>
-                                    <span>การพัฒนาหลักสูตรและสื่อการเรียนการสอน</span>
-                                </li>
-                            </ul>
+                        <div class="flex-1">
+                            <h3 class="text-lg font-bold text-blue-900 mb-2">🔄 อยู่ระหว่างการดำเนินการ</h3>
+                            <p class="text-blue-800 mb-2">
+                                ขณะนี้อยู่ระหว่างการรวบรวมข้อมูลบุคลากรชั้นปรีคลินิก คณะแพทยศาสตร์ มหาวิทยาลัยนครพนม
+                            </p>
+                            <p class="text-blue-700 text-sm">
+                                ข้อมูลจะถูกเพิ่มเติมและอัพเดทในเร็วๆ นี้ หากมีข้อสงสัยกรุณาติดต่อ งานบริหารงานบุคคล
+                            </p>
                         </div>
                     </div>
                 </div>
+
+                <!-- Personnel Grid -->
+                {% if personnel_list %}
+                <div class="grid md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8">
+                    {% for person in personnel_list %}
+                    <div class="bg-white rounded-xl shadow-md border border-gray-100 overflow-hidden hover:shadow-xl transition-all group">
+                        <!-- Photo -->
+                        <div class="relative aspect-[3/4] overflow-hidden bg-gradient-to-br from-blue-100 to-blue-50">
+                            {% if person.photo %}
+                            <img src="{{ person.photo.url }}" alt="{{ person.full_name }}" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300">
+                            <div class="absolute inset-0 bg-gradient-to-t from-blue-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            {% else %}
+                            <div class="w-full h-full flex items-center justify-center">
+                                <span class="text-6xl text-blue-300">👨‍🔬</span>
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Info -->
+                        <div class="p-4">
+                            <h3 class="font-bold text-gray-800 text-sm mb-1 line-clamp-2">{{ person.full_name }}</h3>
+                            <p class="text-primary-600 text-xs mb-2">{{ person.position }}</p>
+                            {% if person.department %}
+                            <p class="text-gray-500 text-xs">{{ person.department.name }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <!-- Empty State -->
+                <div class="bg-white rounded-2xl p-12 text-center shadow-sm border border-gray-100">
+                    <div class="w-24 h-24 bg-blue-100 rounded-full mx-auto mb-4 flex items-center justify-center">
+                        <span class="text-5xl">👨‍🔬</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">กำลังรวบรวมข้อมูล</h3>
+                    <p class="text-gray-600 mb-6 max-w-md mx-auto">
+                        ข้อมูลบุคลากรชั้นปรีคลินิกกำลังอยู่ระหว่างการจัดเตรียม<br>
+                        ติดตามได้ในเร็วๆ นี้
+                    </p>
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>

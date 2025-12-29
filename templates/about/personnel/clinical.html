@@ -27,97 +27,71 @@
     <div class="container mx-auto px-4">
         <div class="grid lg:grid-cols-4 gap-8">
             <!-- Sidebar -->
-            <aside class="lg:col-span-1">
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 sticky top-24">
-                    <h3 class="font-bold text-gray-800 mb-4">เกี่ยวกับคณะ</h3>
-                    <nav class="space-y-2">
-                        <a href="{% url 'about:history' %}" class="block px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-50 transition">ประวัติความเป็นมา</a>
-                        <a href="{% url 'about:vision_mission' %}" class="block px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-50 transition">วิสัยทัศน์/พันธกิจ</a>
-                        <a href="{% url 'about:executives' %}" class="block px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-50 transition">ผู้บริหาร</a>
-                        <a href="{% url 'about:departments' %}" class="block px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-50 transition">ภาควิชา</a>
-                        <a href="{% url 'about:organization' %}" class="block px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-50 transition">โครงสร้างองค์กร</a>
-                        <a href="{% url 'about:personnel' %}" class="block px-4 py-2 rounded-lg bg-primary-50 text-primary-600 font-medium">บุคลากร</a>
-                    </nav>
-                </div>
-            </aside>
+            {% include 'about/components/sidebar.html' %}
 
             <!-- Main Content -->
             <div class="lg:col-span-3">
-                <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
-                    <div class="prose prose-lg max-w-none">
-                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
-                            <p class="text-blue-800 mb-0">
-                                <strong>📌 หน้านี้อยู่ระหว่างการพัฒนา</strong><br>
-                                ข้อมูลบุคลากรชั้นคลินิกจะถูกเพิ่มเติมในอนาคต
-                            </p>
+                <!-- Notice Banner -->
+                <div class="bg-gradient-to-r from-green-50 to-emerald-50 border-l-4 border-green-500 rounded-xl p-6 mb-8 shadow-sm">
+                    <div class="flex items-start gap-4">
+                        <div class="flex-shrink-0">
+                            <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
                         </div>
-
-                        <h2 class="text-2xl font-bold text-primary-600 mb-6">บุคลากรชั้นคลินิก</h2>
-
-                        <p class="text-gray-600 leading-relaxed mb-6">
-                            บุคลากรชั้นคลินิก คณะแพทยศาสตร์ มหาวิทยาลัยนครพนม ประกอบด้วยแพทย์เฉพาะทางและบุคลากรทางการแพทย์ที่มีประสบการณ์ในการดูแลผู้ป่วย
-                        </p>
-
-                        <h3 class="text-xl font-bold text-gray-800 mb-4">สาขาวิชาเอก</h3>
-
-                        <h4 class="text-lg font-semibold text-gray-800 mb-3">🏥 กลุ่มอายุรศาสตร์</h4>
-                        <ul class="mb-6">
-                            <li>อายุรศาสตร์ทั่วไป</li>
-                            <li>โรคหัวใจและหลอดเลือด</li>
-                            <li>ระบบทางเดินอาหาร</li>
-                            <li>โรคไต</li>
-                            <li>โรคต่อมไร้ท่อ</li>
-                        </ul>
-
-                        <h4 class="text-lg font-semibold text-gray-800 mb-3">⚕️ กลุ่มศัลยศาสตร์</h4>
-                        <ul class="mb-6">
-                            <li>ศัลยศาสตร์ทั่วไป</li>
-                            <li>ศัลยศาสตร์กระดูกและข้อ</li>
-                            <li>ศัลยศาสตร์ระบบประสาท</li>
-                            <li>ศัลยศาสตร์ทรวงอก</li>
-                        </ul>
-
-                        <h4 class="text-lg font-semibold text-gray-800 mb-3">👶 กลุ่มสูติ-นรีเวชกรรมและกุมารเวชกรรม</h4>
-                        <ul class="mb-6">
-                            <li>สูติ-นรีเวชศาสตร์</li>
-                            <li>กุมารเวชศาสตร์</li>
-                            <li>พัฒนาการเด็ก</li>
-                        </ul>
-
-                        <h4 class="text-lg font-semibold text-gray-800 mb-3">🧠 กลุ่มวิชาชีพสนับสนุน</h4>
-                        <ul class="mb-6">
-                            <li>จักษุวิทยา</li>
-                            <li>โสต ศอ นาสิก</li>
-                            <li>จิตเวชศาสตร์</li>
-                            <li>รังสีวิทยา</li>
-                            <li>วิสัญญีวิทยา</li>
-                            <li>เวชศาสตร์ฉุกเฉิน</li>
-                            <li>เวชศาสตร์ครอบครัว</li>
-                        </ul>
-
-                        <h3 class="text-xl font-bold text-gray-800 mb-4">ภาระงาน</h3>
-                        <div class="bg-gray-50 rounded-xl p-6">
-                            <ul class="mb-0 space-y-2">
-                                <li class="flex items-start gap-2">
-                                    <span class="text-primary-600 mt-1">•</span>
-                                    <span>การเรียนการสอนนักศึกษาแพทย์ชั้นคลินิก (ปีที่ 4-6)</span>
-                                </li>
-                                <li class="flex items-start gap-2">
-                                    <span class="text-primary-600 mt-1">•</span>
-                                    <span>การดูแลรักษาผู้ป่วย</span>
-                                </li>
-                                <li class="flex items-start gap-2">
-                                    <span class="text-primary-600 mt-1">•</span>
-                                    <span>การวิจัยทางคลินิก</span>
-                                </li>
-                                <li class="flex items-start gap-2">
-                                    <span class="text-primary-600 mt-1">•</span>
-                                    <span>การให้บริการวิชาการแก่โรงพยาบาลเครือข่าย</span>
-                                </li>
-                            </ul>
+                        <div class="flex-1">
+                            <h3 class="text-lg font-bold text-green-900 mb-2">🔄 อยู่ระหว่างการดำเนินการ</h3>
+                            <p class="text-green-800 mb-2">
+                                ขณะนี้อยู่ระหว่างการรวบรวมข้อมูลบุคลากรชั้นคลินิก คณะแพทยศาสตร์ มหาวิทยาลัยนครพนม
+                            </p>
+                            <p class="text-green-700 text-sm">
+                                ข้อมูลจะถูกเพิ่มเติมและอัพเดทในเร็วๆ นี้ หากมีข้อสงสัยกรุณาติดต่อ งานบริหารงานบุคคล
+                            </p>
                         </div>
                     </div>
                 </div>
+
+                <!-- Personnel Grid -->
+                {% if personnel_list %}
+                <div class="grid md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8">
+                    {% for person in personnel_list %}
+                    <div class="bg-white rounded-xl shadow-md border border-gray-100 overflow-hidden hover:shadow-xl transition-all group">
+                        <!-- Photo -->
+                        <div class="relative aspect-[3/4] overflow-hidden bg-gradient-to-br from-green-100 to-green-50">
+                            {% if person.photo %}
+                            <img src="{{ person.photo.url }}" alt="{{ person.full_name }}" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300">
+                            <div class="absolute inset-0 bg-gradient-to-t from-green-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            {% else %}
+                            <div class="w-full h-full flex items-center justify-center">
+                                <span class="text-6xl text-green-300">⚕️</span>
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Info -->
+                        <div class="p-4">
+                            <h3 class="font-bold text-gray-800 text-sm mb-1 line-clamp-2">{{ person.full_name }}</h3>
+                            <p class="text-primary-600 text-xs mb-2">{{ person.position }}</p>
+                            {% if person.department %}
+                            <p class="text-gray-500 text-xs">{{ person.department.name }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <!-- Empty State -->
+                <div class="bg-white rounded-2xl p-12 text-center shadow-sm border border-gray-100">
+                    <div class="w-24 h-24 bg-green-100 rounded-full mx-auto mb-4 flex items-center justify-center">
+                        <span class="text-5xl">⚕️</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">กำลังรวบรวมข้อมูล</h3>
+                    <p class="text-gray-600 mb-6 max-w-md mx-auto">
+                        ข้อมูลบุคลากรชั้นคลินิกกำลังอยู่ระหว่างการจัดเตรียม<br>
+                        ติดตามได้ในเร็วๆ นี้
+                    </p>
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>

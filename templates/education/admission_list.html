@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}การรับสมัคร - {{ SITE_NAME }}{% endblock %}
 
@@ -12,6 +13,20 @@
 
 <section class="py-12">
     <div class="container mx-auto px-4">
+        <!-- Admission Banner 2571 -->
+        <div class="mb-8">
+            <div class="relative group overflow-hidden rounded-2xl shadow-xl border-2 border-gray-100 hover:shadow-2xl transition-all duration-300">
+                <img
+                    src="{% static 'images/education/admission_banner_2571.png' %}"
+                    alt="เตรียมความพร้อม เปิดรับนักศึกษาแพทย์รุ่นแรก มหาวิทยาลัยนครพนม ปี 2571 - รับ 24 คน"
+                    class="w-full h-auto"
+                >
+                <!-- Decorative overlay on hover -->
+                <div class="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </div>
+        </div>
+
+        <!-- Admission List -->
         <div class="space-y-6">
             {% for admission in admissions %}
             <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex flex-col md:flex-row md:items-center gap-6">
