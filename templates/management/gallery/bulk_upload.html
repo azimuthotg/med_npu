@@ -1,0 +1,313 @@
+{% extends 'management/base.html' %}
+
+{% block title %}อัปโหลดรูปภาพหลายไฟล์: {{ gallery.title }}{% endblock %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto">
+
+    <!-- Header -->
+    <div class="mb-6">
+        <a href="{% url 'management:gallery_images' gallery.pk %}" class="text-primary-600 hover:text-primary-700 text-sm mb-2 inline-flex items-center">
+            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+            </svg>
+            กลับไปหน้าจัดการรูปภาพ
+        </a>
+        <h1 class="text-2xl font-bold text-gray-800 mt-2">อัปโหลดรูปภาพหลายไฟล์</h1>
+        <p class="text-gray-500 text-sm mt-1">อัลบั้ม: {{ gallery.title }}</p>
+    </div>
+
+    <!-- Upload Form -->
+    <form method="post" enctype="multipart/form-data" id="uploadForm">
+        {% csrf_token %}
+
+        <!-- Drag & Drop Zone -->
+        <div id="dropZone" class="bg-white rounded-lg shadow p-8 mb-6 border-2 border-dashed border-gray-300 transition hover:border-primary-500 cursor-pointer">
+            <div class="text-center">
+                <svg class="w-16 h-16 mx-auto mb-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                </svg>
+                <h3 class="text-lg font-semibold text-gray-800 mb-2">ลากไฟล์มาวางที่นี่</h3>
+                <p class="text-gray-500 mb-4">หรือคลิกเพื่อเลือกไฟล์</p>
+                <button type="button" onclick="document.getElementById('fileInput').click()"
+                        class="px-6 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition">
+                    เลือกไฟล์
+                </button>
+                <input type="file" id="fileInput" name="images" accept="image/*" multiple style="display: none;">
+                <p class="text-xs text-gray-400 mt-4">รองรับ: JPG, PNG, GIF, WEBP | สามารถเลือกได้หลายไฟล์พร้อมกัน</p>
+            </div>
+        </div>
+
+        <!-- Preview Grid -->
+        <div id="previewSection" class="hidden mb-6">
+            <div class="bg-white rounded-lg shadow p-6">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4">
+                    รูปภาพที่เลือก (<span id="imageCount">0</span> รูป)
+                </h3>
+                <div id="previewGrid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 mb-4">
+                    <!-- Preview items will be inserted here -->
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex items-center justify-between pt-4 border-t border-gray-200">
+                    <button type="button" onclick="clearAll()"
+                            class="px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg transition">
+                        ล้างทั้งหมด
+                    </button>
+                    <button type="submit" id="uploadBtn"
+                            class="px-6 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition flex items-center">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
+                        </svg>
+                        อัปโหลดทั้งหมด
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div id="progressSection" class="hidden bg-white rounded-lg shadow p-6">
+            <h3 class="text-lg font-semibold text-gray-800 mb-4">กำลังอัปโหลด...</h3>
+            <div class="w-full bg-gray-200 rounded-full h-4 overflow-hidden">
+                <div id="progressBar" class="bg-primary-600 h-full transition-all duration-300" style="width: 0%"></div>
+            </div>
+            <p id="progressText" class="text-sm text-gray-600 mt-2 text-center">0%</p>
+        </div>
+
+        <!-- Info Box -->
+        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <p class="text-xs font-medium text-blue-800 mb-2">💡 ระบบจะทำอะไรให้อัตโนมัติ:</p>
+            <ul class="text-xs text-blue-700 space-y-1">
+                <li>✓ สร้างรูปย่อ (Thumbnail) ขนาด 400x400 พิกเซล สำหรับทุกรูป</li>
+                <li>✓ สร้างรูปขนาดกลาง ขนาด 1200x800 พิกเซล สำหรับทุกรูป</li>
+                <li>✓ รูปต้นฉบับจะถูกเก็บไว้แบบเต็มขนาด</li>
+                <li>✓ เรียงลำดับตามชื่อไฟล์โดยอัตโนมัติ</li>
+            </ul>
+        </div>
+    </form>
+
+</div>
+
+<style>
+    #dropZone.dragover {
+        border-color: #229799;
+        background-color: #E8F7F7;
+    }
+
+    .preview-item {
+        position: relative;
+        aspect-ratio: 1;
+        border-radius: 0.5rem;
+        overflow: hidden;
+        background-color: #f3f4f6;
+    }
+
+    .preview-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .preview-item .remove-btn {
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+        background-color: rgba(239, 68, 68, 0.9);
+        color: white;
+        border-radius: 9999px;
+        width: 1.5rem;
+        height: 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .preview-item .remove-btn:hover {
+        background-color: rgba(220, 38, 38, 1);
+        transform: scale(1.1);
+    }
+
+    .preview-item .file-name {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+        color: white;
+        padding: 0.5rem;
+        font-size: 0.625rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+</style>
+
+<script>
+    let selectedFiles = [];
+    const dropZone = document.getElementById('dropZone');
+    const fileInput = document.getElementById('fileInput');
+    const previewSection = document.getElementById('previewSection');
+    const previewGrid = document.getElementById('previewGrid');
+    const imageCount = document.getElementById('imageCount');
+    const progressSection = document.getElementById('progressSection');
+    const uploadForm = document.getElementById('uploadForm');
+
+    // Drag & Drop Events
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        dropZone.addEventListener(eventName, preventDefaults, false);
+    });
+
+    function preventDefaults(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+
+    ['dragenter', 'dragover'].forEach(eventName => {
+        dropZone.addEventListener(eventName, () => {
+            dropZone.classList.add('dragover');
+        }, false);
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+        dropZone.addEventListener(eventName, () => {
+            dropZone.classList.remove('dragover');
+        }, false);
+    });
+
+    dropZone.addEventListener('drop', handleDrop, false);
+    dropZone.addEventListener('click', () => fileInput.click());
+
+    function handleDrop(e) {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        handleFiles(files);
+    }
+
+    fileInput.addEventListener('change', function(e) {
+        handleFiles(this.files);
+    });
+
+    function handleFiles(files) {
+        // Filter only image files
+        const imageFiles = [...files].filter(file => file.type.startsWith('image/'));
+
+        if (imageFiles.length === 0) {
+            alert('กรุณาเลือกไฟล์รูปภาพเท่านั้น');
+            return;
+        }
+
+        // Add to selectedFiles
+        selectedFiles = [...selectedFiles, ...imageFiles];
+        updatePreview();
+    }
+
+    function updatePreview() {
+        if (selectedFiles.length === 0) {
+            previewSection.classList.add('hidden');
+            return;
+        }
+
+        previewSection.classList.remove('hidden');
+        imageCount.textContent = selectedFiles.length;
+        previewGrid.innerHTML = '';
+
+        selectedFiles.forEach((file, index) => {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const div = document.createElement('div');
+                div.className = 'preview-item';
+                div.innerHTML = `
+                    <img src="${e.target.result}" alt="${file.name}">
+                    <div class="remove-btn" onclick="removeFile(${index})">
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </div>
+                    <div class="file-name">${file.name}</div>
+                `;
+                previewGrid.appendChild(div);
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+
+    function removeFile(index) {
+        selectedFiles.splice(index, 1);
+        updatePreview();
+    }
+
+    function clearAll() {
+        if (confirm('ต้องการล้างรูปภาพทั้งหมดที่เลือกหรือไม่?')) {
+            selectedFiles = [];
+            fileInput.value = '';
+            updatePreview();
+        }
+    }
+
+    // Form Submission
+    uploadForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        if (selectedFiles.length === 0) {
+            alert('กรุณาเลือกรูปภาพอย่างน้อย 1 รูป');
+            return;
+        }
+
+        // Show progress
+        progressSection.classList.remove('hidden');
+        previewSection.classList.add('hidden');
+        dropZone.classList.add('hidden');
+
+        const formData = new FormData();
+        formData.append('csrfmiddlewaretoken', document.querySelector('[name=csrfmiddlewaretoken]').value);
+
+        selectedFiles.forEach((file, index) => {
+            formData.append('images', file);
+        });
+
+        try {
+            const xhr = new XMLHttpRequest();
+
+            // Progress tracking
+            xhr.upload.addEventListener('progress', function(e) {
+                if (e.lengthComputable) {
+                    const percent = Math.round((e.loaded / e.total) * 100);
+                    document.getElementById('progressBar').style.width = percent + '%';
+                    document.getElementById('progressText').textContent = percent + '%';
+                }
+            });
+
+            xhr.addEventListener('load', function() {
+                if (xhr.status === 200 || xhr.status === 302) {
+                    window.location.href = "{% url 'management:gallery_images' gallery.pk %}";
+                } else {
+                    alert('เกิดข้อผิดพลาดในการอัปโหลด กรุณาลองใหม่อีกครั้ง');
+                    progressSection.classList.add('hidden');
+                    previewSection.classList.remove('hidden');
+                    dropZone.classList.remove('hidden');
+                }
+            });
+
+            xhr.addEventListener('error', function() {
+                alert('เกิดข้อผิดพลาดในการอัปโหลด กรุณาลองใหม่อีกครั้ง');
+                progressSection.classList.add('hidden');
+                previewSection.classList.remove('hidden');
+                dropZone.classList.remove('hidden');
+            });
+
+            xhr.open('POST', '{% url "management:gallery_bulk_upload" gallery.pk %}');
+            xhr.send(formData);
+
+        } catch (error) {
+            console.error('Upload error:', error);
+            alert('เกิดข้อผิดพลาดในการอัปโหลด');
+            progressSection.classList.add('hidden');
+            previewSection.classList.remove('hidden');
+            dropZone.classList.remove('hidden');
+        }
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load thai_filters %}
+
+{% block title %}ข่าวประชาสัมพันธ์ - {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+<section class="py-12 bg-primary-50">
+    <div class="container mx-auto px-4">
+        <h1 class="text-3xl font-bold text-gray-800 mb-2">ข่าวประชาสัมพันธ์</h1>
+        <p class="text-gray-500">ติดตามข่าวสารและกิจกรรมล่าสุดของคณะ</p>
+    </div>
+</section>
+
+<section class="py-12">
+    <div class="container mx-auto px-4">
+        <!-- Categories -->
+        <div class="flex flex-wrap gap-2 mb-8">
+            <a href="{% url 'news:list' %}" class="px-4 py-2 rounded-full text-sm font-medium {% if not current_category %}bg-primary-500 text-white{% else %}bg-gray-100 text-gray-600 hover:bg-gray-200{% endif %} transition">
+                ทั้งหมด
+            </a>
+            {% for cat in categories %}
+            <a href="{% url 'news:category' cat.slug %}" class="px-4 py-2 rounded-full text-sm font-medium {% if current_category.slug == cat.slug %}bg-primary-500 text-white{% else %}bg-gray-100 text-gray-600 hover:bg-gray-200{% endif %} transition">
+                {{ cat.name }}
+            </a>
+            {% endfor %}
+        </div>
+        
+        <!-- News Grid -->
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for news in news_list %}
+            <article class="card-hover bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100">
+                <div class="h-48 bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center">
+                    {% if news.featured_image %}
+                    <img src="{{ news.featured_image.url }}" alt="{{ news.title }}" class="w-full h-full object-cover">
+                    {% else %}
+                    <span class="text-6xl">📰</span>
+                    {% endif %}
+                </div>
+                <div class="p-6">
+                    {% if news.category %}
+                    <span class="inline-block px-3 py-1 bg-primary-100 text-primary-600 rounded-full text-xs font-medium mb-3">{{ news.category.name }}</span>
+                    {% endif %}
+                    <h3 class="text-lg font-bold text-gray-800 mb-2 line-clamp-2">
+                        <a href="{{ news.get_absolute_url }}" class="hover:text-primary-600 transition">{{ news.title }}</a>
+                    </h3>
+                    <p class="text-gray-500 text-sm mb-4 line-clamp-2">{{ news.excerpt|striptags }}</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-gray-400">{{ news.published_at|thai_date }}</span>
+                        <a href="{{ news.get_absolute_url }}" class="text-primary-500 hover:text-primary-600 text-sm font-medium">อ่านต่อ →</a>
+                    </div>
+                </div>
+            </article>
+            {% empty %}
+            <div class="col-span-3 text-center py-12 text-gray-500">
+                <p>ยังไม่มีข่าวประชาสัมพันธ์</p>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <!-- Pagination -->
+        {% if page_obj.has_other_pages %}
+        <div class="flex justify-center mt-12">
+            <nav class="flex gap-2">
+                {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}" class="px-4 py-2 bg-white border border-gray-200 rounded-lg hover:bg-gray-50">ก่อนหน้า</a>
+                {% endif %}
+                
+                {% for num in page_obj.paginator.page_range %}
+                <a href="?page={{ num }}" class="px-4 py-2 {% if page_obj.number == num %}bg-primary-500 text-white{% else %}bg-white border border-gray-200 hover:bg-gray-50{% endif %} rounded-lg">{{ num }}</a>
+                {% endfor %}
+                
+                {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}" class="px-4 py-2 bg-white border border-gray-200 rounded-lg hover:bg-gray-50">ถัดไป</a>
+                {% endif %}
+            </nav>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

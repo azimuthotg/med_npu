@@ -1,0 +1,191 @@
+{% extends 'management/base.html' %}
+
+{% block title %}{{ form_title }}{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+
+    <!-- Header -->
+    <div class="mb-6">
+        <a href="{% url 'management:banner_list' %}" class="text-primary-600 hover:text-primary-700 text-sm mb-2 inline-flex items-center">
+            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+            </svg>
+            กลับไปรายการแบนเนอร์
+        </a>
+        <h1 class="text-2xl font-bold text-gray-800 mt-2">{{ form_title }}</h1>
+    </div>
+
+    <!-- Form -->
+    <form method="post" enctype="multipart/form-data" class="space-y-6">
+        {% csrf_token %}
+
+        <!-- Main Card -->
+        <div class="bg-white rounded-lg shadow p-6">
+            <h3 class="text-lg font-semibold text-gray-800 mb-4">ข้อมูลพื้นฐาน</h3>
+
+            <!-- Title -->
+            <div class="mb-4">
+                <label for="id_title" class="block text-sm font-medium text-gray-700 mb-2">
+                    หัวข้อ <span class="text-red-500">*</span>
+                </label>
+                <input type="text" name="title" id="id_title" value="{{ form.title.value|default:'' }}"
+                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                       required>
+                {% if form.title.errors %}
+                <p class="mt-1 text-sm text-red-600">{{ form.title.errors.0 }}</p>
+                {% endif %}
+                <p class="mt-1 text-xs text-gray-500">หัวข้อแบนเนอร์ที่จะแสดงในสไลด์</p>
+            </div>
+
+            <!-- Description -->
+            <div class="mb-4">
+                <label for="id_description" class="block text-sm font-medium text-gray-700 mb-2">
+                    คำอธิบาย
+                </label>
+                <textarea name="description" id="id_description" rows="3"
+                          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent">{{ form.description.value|default:'' }}</textarea>
+                {% if form.description.errors %}
+                <p class="mt-1 text-sm text-red-600">{{ form.description.errors.0 }}</p>
+                {% endif %}
+                <p class="mt-1 text-xs text-gray-500">รายละเอียดเพิ่มเติมที่จะแสดงในแบนเนอร์</p>
+            </div>
+
+            <!-- Image -->
+            <div class="mb-4">
+                <label for="id_image" class="block text-sm font-medium text-gray-700 mb-2">
+                    รูปภาพแบนเนอร์ <span class="text-red-500">*</span>
+                </label>
+                <input type="file" name="image" id="id_image" accept="image/*"
+                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+                {% if form.image.errors %}
+                <p class="mt-1 text-sm text-red-600">{{ form.image.errors.0 }}</p>
+                {% endif %}
+                {% if form.instance.image %}
+                <div class="mt-2">
+                    <p class="text-xs text-gray-500 mb-2">รูปปัจจุบัน:</p>
+                    <img src="{{ form.instance.image.url }}" alt="Current banner" class="h-32 rounded-lg shadow">
+                </div>
+                {% endif %}
+                <div class="mt-2 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                    <p class="text-sm font-medium text-blue-800 mb-1">📐 ข้อกำหนดรูปภาพแบนเนอร์</p>
+                    <ul class="text-xs text-blue-700 space-y-1">
+                        <li>• <strong>อัตราส่วน:</strong> 21:9 (Ultra-wide) เท่านั้น</li>
+                        <li>• <strong>ขนาดที่แนะนำ:</strong> 1920x823 px, 2560x1097 px หรือ 3840x1646 px</li>
+                        <li>• <strong>รูปแบบไฟล์:</strong> JPG, PNG (ไฟล์ไม่เกิน 5 MB)</li>
+                        <li>• <strong>หมายเหตุ:</strong> รูปจะแสดงเต็มความกว้างหน้าจอโดยคงสัดส่วน 21:9 เสมอ</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA Card -->
+        <div class="bg-white rounded-lg shadow p-6">
+            <h3 class="text-lg font-semibold text-gray-800 mb-4">ปุ่ม Call-to-Action</h3>
+
+            <!-- Button Text -->
+            <div class="mb-4">
+                <label for="id_button_text" class="block text-sm font-medium text-gray-700 mb-2">
+                    ข้อความปุ่ม
+                </label>
+                <input type="text" name="button_text" id="id_button_text" value="{{ form.button_text.value|default:'' }}"
+                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                       placeholder="เช่น สมัครเลย, เรียนรู้เพิ่มเติม">
+                {% if form.button_text.errors %}
+                <p class="mt-1 text-sm text-red-600">{{ form.button_text.errors.0 }}</p>
+                {% endif %}
+                <p class="mt-1 text-xs text-gray-500">ข้อความที่จะแสดงบนปุ่ม (ถ้าไม่ระบุจะไม่แสดงปุ่ม)</p>
+            </div>
+
+            <!-- Button Link -->
+            <div class="mb-4">
+                <label for="id_button_link" class="block text-sm font-medium text-gray-700 mb-2">
+                    ลิงก์ปุ่ม
+                </label>
+                <input type="text" name="button_link" id="id_button_link" value="{{ form.button_link.value|default:'' }}"
+                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                       placeholder="/education/admission/ หรือ https://example.com">
+                {% if form.button_link.errors %}
+                <p class="mt-1 text-sm text-red-600">{{ form.button_link.errors.0 }}</p>
+                {% endif %}
+                <p class="mt-1 text-xs text-gray-500">URL ที่จะเปิดเมื่อคลิกปุ่ม</p>
+            </div>
+        </div>
+
+        <!-- Settings Card -->
+        <div class="bg-white rounded-lg shadow p-6">
+            <h3 class="text-lg font-semibold text-gray-800 mb-4">การตั้งค่า</h3>
+
+            <!-- Order -->
+            <div class="mb-4">
+                <label for="id_order" class="block text-sm font-medium text-gray-700 mb-2">
+                    ลำดับการแสดง
+                </label>
+                <input type="number" name="order" id="id_order" value="{{ form.order.value|default:0 }}"
+                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+                {% if form.order.errors %}
+                <p class="mt-1 text-sm text-red-600">{{ form.order.errors.0 }}</p>
+                {% endif %}
+                <p class="mt-1 text-xs text-gray-500">เลขน้อยจะแสดงก่อน (0 = แสดงก่อนสุด)</p>
+            </div>
+
+            <!-- Is Active -->
+            <div class="mb-4">
+                <div class="flex items-center">
+                    <input type="checkbox" name="is_active" id="id_is_active" value="True"
+                           {% if form.is_active.value or form.is_active.value == None %}checked{% endif %}
+                           class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
+                    <label for="id_is_active" class="ml-2 block text-sm text-gray-900">
+                        เปิดใช้งานแบนเนอร์นี้
+                    </label>
+                </div>
+                {% if form.is_active.errors %}
+                <p class="mt-1 text-sm text-red-600">{{ form.is_active.errors.0 }}</p>
+                {% endif %}
+                <p class="mt-1 text-xs text-gray-500">ถ้าปิดใช้งาน แบนเนอร์จะไม่แสดงบนหน้าเว็บ</p>
+            </div>
+
+            <!-- Start Date -->
+            <div class="mb-4">
+                <label for="id_start_date" class="block text-sm font-medium text-gray-700 mb-2">
+                    วันที่เริ่มแสดง
+                </label>
+                <input type="datetime-local" name="start_date" id="id_start_date"
+                       value="{% if form.start_date.value %}{{ form.start_date.value|date:'Y-m-d\TH:i' }}{% endif %}"
+                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+                {% if form.start_date.errors %}
+                <p class="mt-1 text-sm text-red-600">{{ form.start_date.errors.0 }}</p>
+                {% endif %}
+                <p class="mt-1 text-xs text-gray-500">ถ้าไม่ระบุจะแสดงทันที</p>
+            </div>
+
+            <!-- End Date -->
+            <div class="mb-4">
+                <label for="id_end_date" class="block text-sm font-medium text-gray-700 mb-2">
+                    วันที่สิ้นสุดการแสดง
+                </label>
+                <input type="datetime-local" name="end_date" id="id_end_date"
+                       value="{% if form.end_date.value %}{{ form.end_date.value|date:'Y-m-d\TH:i' }}{% endif %}"
+                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+                {% if form.end_date.errors %}
+                <p class="mt-1 text-sm text-red-600">{{ form.end_date.errors.0 }}</p>
+                {% endif %}
+                <p class="mt-1 text-xs text-gray-500">ถ้าไม่ระบุจะแสดงไปเรื่อยๆ</p>
+            </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="flex items-center justify-end space-x-3">
+            <a href="{% url 'management:banner_list' %}"
+               class="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition">
+                ยกเลิก
+            </a>
+            <button type="submit"
+                    class="px-6 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition">
+                {{ submit_text }}
+            </button>
+        </div>
+    </form>
+
+</div>
+{% endblock %}

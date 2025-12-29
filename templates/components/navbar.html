@@ -1,0 +1,157 @@
+<!-- Header / Navigation -->
+<header class="bg-white shadow-lg sticky top-0 z-50" x-data="{ mobileMenu: false }">
+    <div class="container mx-auto px-4">
+        <div class="flex items-center justify-between py-4">
+            <!-- Logo -->
+            <a href="{% url 'core:home' %}" class="flex items-center gap-4">
+                <div class="w-14 h-14 bg-gradient-to-br from-primary-400 to-primary-600 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-primary-500/30">
+                    MED
+                </div>
+                <div>
+                    <h1 class="text-lg font-bold text-primary-700">คณะแพทยศาสตร์</h1>
+                    <p class="text-xs text-gray-500">มหาวิทยาลัยนครพนม</p>
+                </div>
+            </a>
+
+            <!-- Main Navigation (Desktop) -->
+            <nav class="hidden lg:flex items-center gap-6">
+                <a href="{% url 'core:home' %}" class="text-gray-700 hover:text-primary-500 font-medium transition">หน้าหลัก</a>
+                
+                <!-- About Dropdown -->
+                <div class="relative group">
+                    <a href="{% url 'about:index' %}" class="text-gray-700 hover:text-primary-500 font-medium flex items-center gap-1 transition">
+                        เกี่ยวกับเรา
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </a>
+                    <div class="absolute top-full left-0 mt-2 w-48 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 border border-gray-100">
+                        <a href="{% url 'about:history' %}" class="block px-4 py-3 text-gray-700 hover:bg-primary-50 hover:text-primary-600 rounded-t-lg">ประวัติความเป็นมา</a>
+                        <a href="{% url 'about:vision_mission' %}" class="block px-4 py-3 text-gray-700 hover:bg-primary-50 hover:text-primary-600">วิสัยทัศน์/พันธกิจ</a>
+                        <a href="{% url 'about:executives' %}" class="block px-4 py-3 text-gray-700 hover:bg-primary-50 hover:text-primary-600">ผู้บริหาร</a>
+                        <a href="{% url 'about:departments' %}" class="block px-4 py-3 text-gray-700 hover:bg-primary-50 hover:text-primary-600">ภาควิชา</a>
+                        <a href="{% url 'about:organization' %}" class="block px-4 py-3 text-gray-700 hover:bg-primary-50 hover:text-primary-600">โครงสร้างองค์กร</a>
+                        <a href="{% url 'about:personnel' %}" class="block px-4 py-3 text-gray-700 hover:bg-primary-50 hover:text-primary-600 rounded-b-lg">บุคลากร</a>
+                    </div>
+                </div>
+                
+                <!-- Education Dropdown -->
+                <div class="relative group">
+                    <a href="{% url 'education:index' %}" class="text-gray-700 hover:text-primary-500 font-medium flex items-center gap-1 transition">
+                        การศึกษา
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </a>
+                    <div class="absolute top-full left-0 mt-2 w-48 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 border border-gray-100">
+                        <a href="{% url 'education:program_list' %}" class="block px-4 py-3 text-gray-700 hover:bg-primary-50 hover:text-primary-600 rounded-t-lg">หลักสูตร</a>
+                        <a href="{% url 'education:admission_list' %}" class="block px-4 py-3 text-gray-700 hover:bg-primary-50 hover:text-primary-600">การรับสมัคร</a>
+                        <a href="{% url 'education:calendar' %}" class="block px-4 py-3 text-gray-700 hover:bg-primary-50 hover:text-primary-600">ปฏิทินการศึกษา</a>
+                        <a href="{% url 'education:foundation' %}" class="block px-4 py-3 text-gray-700 hover:bg-primary-50 hover:text-primary-600">มูลนิธิคณะแพทยศาสตร์</a>
+                        <a href="{% url 'education:scholarship' %}" class="block px-4 py-3 text-gray-700 hover:bg-primary-50 hover:text-primary-600 rounded-b-lg">ทุนการศึกษา</a>
+                    </div>
+                </div>
+
+                <!-- Research & Services Dropdown -->
+                <div class="relative group">
+                    <a href="{% url 'core:research_services' %}" class="text-gray-700 hover:text-primary-500 font-medium flex items-center gap-1 transition">
+                        วิจัยและบริการวิชาการ
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </a>
+                    <div class="absolute top-full left-0 mt-2 w-56 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 border border-gray-100">
+                        <div class="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">งานวิจัย</div>
+                        <a href="{% url 'core:research_centers' %}" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600 text-sm">ศูนย์วิจัย</a>
+                        <a href="{% url 'core:research_projects' %}" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600 text-sm">โครงการวิจัย</a>
+                        <a href="{% url 'core:publications' %}" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600 text-sm">ผลงานวิจัย</a>
+                        <a href="{% url 'core:research_ethics' %}" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600 text-sm border-b border-gray-100">จริยธรรมการวิจัย</a>
+                        <div class="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">บริการวิชาการ</div>
+                        <a href="{% url 'core:community_services' %}" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600 text-sm">โครงการบริการชุมชน</a>
+                        <a href="{% url 'core:training_courses' %}" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600 text-sm">หลักสูตรฝึกอบรม</a>
+                        <a href="{% url 'core:collaboration' %}" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600 text-sm rounded-b-lg">ความร่วมมือทางวิชาการ</a>
+                    </div>
+                </div>
+
+                <!-- Quality Assurance Dropdown -->
+                <div class="relative group">
+                    <a href="#" class="text-gray-700 hover:text-primary-500 font-medium flex items-center gap-1 transition">
+                        ประกันคุณภาพ
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </a>
+                    <div class="absolute top-full left-0 mt-2 w-48 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 border border-gray-100">
+                        <a href="{% url 'core:qa_wfme' %}" class="block px-4 py-3 text-gray-700 hover:bg-primary-50 hover:text-primary-600 rounded-t-lg">WFME</a>
+                        <a href="{% url 'core:qa_edpex' %}" class="block px-4 py-3 text-gray-700 hover:bg-primary-50 hover:text-primary-600">EdPEx</a>
+                        <a href="{% url 'core:qa_aunqa' %}" class="block px-4 py-3 text-gray-700 hover:bg-primary-50 hover:text-primary-600">AUNQA</a>
+                        <a href="{% url 'core:qa_npuqa' %}" class="block px-4 py-3 text-gray-700 hover:bg-primary-50 hover:text-primary-600 rounded-b-lg">NPUQA</a>
+                    </div>
+                </div>
+
+                <a href="{% url 'news:list' %}" class="text-gray-700 hover:text-primary-500 font-medium transition">ข่าวสาร</a>
+
+                <!-- Contact & Download Dropdown -->
+                <div class="relative group">
+                    <a href="{% url 'core:contact' %}" class="text-gray-700 hover:text-primary-500 font-medium flex items-center gap-1 transition">
+                        ติดต่อ
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </a>
+                    <div class="absolute top-full left-0 mt-2 w-48 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 border border-gray-100">
+                        <a href="{% url 'core:contact' %}" class="block px-4 py-3 text-gray-700 hover:bg-primary-50 hover:text-primary-600 rounded-t-lg">ติดต่อเรา</a>
+                        <a href="{% url 'core:download' %}" class="block px-4 py-3 text-gray-700 hover:bg-primary-50 hover:text-primary-600 rounded-b-lg">ดาวน์โหลด</a>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Search & CTA -->
+            <div class="flex items-center gap-4">
+                <a href="{% url 'core:search' %}" class="p-2 text-gray-500 hover:text-primary-500 transition">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                    </svg>
+                </a>
+                <a href="{% url 'education:admission_list' %}" class="hidden md:inline-flex px-5 py-2 bg-primary-500 text-white rounded-full hover:bg-primary-600 transition font-medium shadow-lg shadow-primary-500/30 text-sm">
+                    สมัครเรียน
+                </a>
+                
+                <!-- Mobile Menu Button -->
+                <button @click="mobileMenu = !mobileMenu" class="lg:hidden p-2 text-gray-500">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path x-show="!mobileMenu" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        <path x-show="mobileMenu" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div x-show="mobileMenu" x-transition class="lg:hidden pb-4">
+            <nav class="flex flex-col gap-2">
+                <a href="{% url 'core:home' %}" class="px-4 py-2 text-gray-700 hover:bg-primary-50 rounded-lg">หน้าหลัก</a>
+                <a href="{% url 'about:index' %}" class="px-4 py-2 text-gray-700 hover:bg-primary-50 rounded-lg">เกี่ยวกับเรา</a>
+                <a href="{% url 'education:index' %}" class="px-4 py-2 text-gray-700 hover:bg-primary-50 rounded-lg">การศึกษา</a>
+                <a href="{% url 'core:research_services' %}" class="px-4 py-2 text-gray-700 hover:bg-primary-50 rounded-lg">วิจัยและบริการวิชาการ</a>
+                <div class="px-4 py-2">
+                    <div class="text-sm font-semibold text-gray-500 mb-1">ประกันคุณภาพ</div>
+                    <div class="pl-3 flex flex-col gap-1">
+                        <a href="{% url 'core:qa_wfme' %}" class="py-1 text-gray-600 hover:text-primary-600 text-sm">WFME</a>
+                        <a href="{% url 'core:qa_edpex' %}" class="py-1 text-gray-600 hover:text-primary-600 text-sm">EdPEx</a>
+                        <a href="{% url 'core:qa_aunqa' %}" class="py-1 text-gray-600 hover:text-primary-600 text-sm">AUNQA</a>
+                        <a href="{% url 'core:qa_npuqa' %}" class="py-1 text-gray-600 hover:text-primary-600 text-sm">NPUQA</a>
+                    </div>
+                </div>
+                <a href="{% url 'news:list' %}" class="px-4 py-2 text-gray-700 hover:bg-primary-50 rounded-lg">ข่าวสาร</a>
+                <div class="px-4 py-2">
+                    <div class="text-sm font-semibold text-gray-500 mb-1">ติดต่อ</div>
+                    <div class="pl-3 flex flex-col gap-1">
+                        <a href="{% url 'core:contact' %}" class="py-1 text-gray-600 hover:text-primary-600 text-sm">ติดต่อเรา</a>
+                        <a href="{% url 'core:download' %}" class="py-1 text-gray-600 hover:text-primary-600 text-sm">ดาวน์โหลด</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>

@@ -1,0 +1,333 @@
+{% extends 'management/base.html' %}
+
+{% block title %}{{ form_title }}{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+
+    <!-- Header -->
+    <div class="mb-6">
+        <a href="{% url 'management:news_list' %}" class="text-primary-600 hover:text-primary-700 text-sm mb-2 inline-flex items-center">
+            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+            </svg>
+            กลับไปรายการข่าว
+        </a>
+        <h1 class="text-2xl font-bold text-gray-800 mt-2">{{ form_title }}</h1>
+    </div>
+
+    <!-- Form -->
+    <form method="post" enctype="multipart/form-data" class="space-y-6">
+        {% csrf_token %}
+
+        <!-- Main Card -->
+        <div class="bg-white rounded-lg shadow p-6">
+            <h3 class="text-lg font-semibold text-gray-800 mb-4">ข้อมูลพื้นฐาน</h3>
+
+            <!-- Title -->
+            <div class="mb-4">
+                <label for="id_title" class="block text-sm font-medium text-gray-700 mb-2">
+                    หัวข้อข่าว <span class="text-red-500">*</span>
+                </label>
+                {{ form.title }}
+                {% if form.title.errors %}
+                <p class="mt-1 text-sm text-red-600">{{ form.title.errors.0 }}</p>
+                {% endif %}
+                <p class="mt-1 text-xs text-gray-500">หัวข้อข่าวที่จะแสดงให้ผู้อ่านเห็น</p>
+            </div>
+
+            <!-- Category -->
+            <div class="mb-4">
+                <label for="id_category" class="block text-sm font-medium text-gray-700 mb-2">
+                    หมวดหมู่
+                </label>
+                {{ form.category }}
+                {% if form.category.errors %}
+                <p class="mt-1 text-sm text-red-600">{{ form.category.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <!-- Gallery -->
+            <div class="mb-4">
+                <label for="id_gallery" class="block text-sm font-medium text-gray-700 mb-2">
+                    อัลบั้มภาพกิจกรรม
+                </label>
+                {{ form.gallery }}
+                {% if form.gallery.errors %}
+                <p class="mt-1 text-sm text-red-600">{{ form.gallery.errors.0 }}</p>
+                {% endif %}
+                <p class="mt-1 text-xs text-gray-500">เลือกอัลบั้มภาพที่เกี่ยวข้องกับข่าวนี้ (ไม่บังคับ)</p>
+                {% if object and object.gallery %}
+                <div class="mt-2 p-2 bg-blue-50 border border-blue-200 rounded">
+                    <p class="text-xs text-blue-800">
+                        📸 กำลังแนบอัลบั้ม: <strong>{{ object.gallery.title }}</strong> ({{ object.gallery.image_count }} รูป)
+                    </p>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Excerpt -->
+            <div class="mb-4">
+                <label for="id_excerpt" class="block text-sm font-medium text-gray-700 mb-2">
+                    เนื้อหาย่อ
+                </label>
+                <div id="excerpt-editor" class="bg-white border border-gray-300 rounded-lg" style="min-height: 150px;"></div>
+                <textarea name="excerpt" id="id_excerpt" style="display: none;">{{ form.excerpt.value|default:'' }}</textarea>
+                {% if form.excerpt.errors %}
+                <p class="mt-1 text-sm text-red-600">{{ form.excerpt.errors.0 }}</p>
+                {% endif %}
+                <p class="mt-1 text-xs text-gray-500">สรุปสั้นๆ สูงสุด 500 ตัวอักษร | <span id="excerpt-count">0</span>/500 ตัวอักษร</p>
+            </div>
+
+            <!-- Content -->
+            <div class="mb-4">
+                <label for="id_content" class="block text-sm font-medium text-gray-700 mb-2">
+                    เนื้อหาข่าว <span class="text-red-500">*</span>
+                </label>
+                <div id="content-editor" class="bg-white border border-gray-300 rounded-lg" style="min-height: 400px;"></div>
+                <textarea name="content" id="id_content" style="display: none;">{{ form.content.value|default:'' }}</textarea>
+                {% if form.content.errors %}
+                <p class="mt-1 text-sm text-red-600">{{ form.content.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <!-- Featured Image -->
+            <div class="mb-4">
+                <label for="id_featured_image" class="block text-sm font-medium text-gray-700 mb-2">
+                    รูปภาพประกอบ
+                </label>
+                {{ form.featured_image }}
+                {% if form.featured_image.errors %}
+                <p class="mt-1 text-sm text-red-600">{{ form.featured_image.errors.0 }}</p>
+                {% endif %}
+                {% if object and object.featured_image %}
+                <div class="mt-2">
+                    <img src="{{ object.featured_image.url }}" alt="{{ object.title }}"
+                         class="h-32 w-auto rounded border border-gray-200">
+                </div>
+                {% endif %}
+                <p class="mt-1 text-xs text-gray-500">รูปภาพขนาด 1200x630 พิกเซล</p>
+            </div>
+        </div>
+
+        <!-- Publishing Settings -->
+        <div class="bg-white rounded-lg shadow p-6">
+            <h3 class="text-lg font-semibold text-gray-800 mb-4">การเผยแพร่</h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Published Date -->
+                <div>
+                    <label for="id_published_at" class="block text-sm font-medium text-gray-700 mb-2">
+                        วันที่เผยแพร่
+                    </label>
+                    <input type="datetime-local"
+                           name="published_at"
+                           id="id_published_at"
+                           value="{% if form.published_at.value %}{{ form.published_at.value|date:'Y-m-d\TH:i' }}{% endif %}"
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+                    {% if form.published_at.errors %}
+                    <p class="mt-1 text-sm text-red-600">{{ form.published_at.errors.0 }}</p>
+                    {% endif %}
+                    <p class="mt-1 text-xs text-gray-500">📅 คลิกเพื่อเลือกวันที่และเวลา</p>
+                </div>
+
+                <!-- Status Checkboxes -->
+                <div class="space-y-3">
+                    <div class="flex items-center">
+                        {{ form.is_published }}
+                        <label for="id_is_published" class="ml-2 text-sm text-gray-700">
+                            เผยแพร่ข่าวนี้
+                        </label>
+                    </div>
+
+                    <div class="flex items-center">
+                        {{ form.is_featured }}
+                        <label for="id_is_featured" class="ml-2 text-sm text-gray-700">
+                            ตั้งเป็นข่าวเด่น
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SEO Settings -->
+        <div class="bg-white rounded-lg shadow p-6">
+            <h3 class="text-lg font-semibold text-gray-800 mb-4">SEO</h3>
+
+            <!-- Meta Description -->
+            <div>
+                <label for="id_meta_description" class="block text-sm font-medium text-gray-700 mb-2">
+                    Meta Description
+                </label>
+                {{ form.meta_description }}
+                {% if form.meta_description.errors %}
+                <p class="mt-1 text-sm text-red-600">{{ form.meta_description.errors.0 }}</p>
+                {% endif %}
+                <p class="mt-1 text-xs text-gray-500">คำอธิบายสั้นๆ สำหรับ Google Search (สูงสุด 160 ตัวอักษร)</p>
+            </div>
+        </div>
+
+        <!-- Submit Buttons -->
+        <div class="flex items-center justify-between">
+            <a href="{% url 'management:news_list' %}"
+               class="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition">
+                ยกเลิก
+            </a>
+            <button type="submit"
+                    class="px-6 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition">
+                {{ submit_text }}
+            </button>
+        </div>
+
+    </form>
+
+</div>
+
+<!-- Quill Editor CSS -->
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+
+<style>
+    /* Form field styling */
+    #id_title, #id_category, #id_gallery, #id_published_at {
+        width: 100%;
+        padding: 0.5rem 0.75rem;
+        border: 1px solid #d1d5db;
+        border-radius: 0.5rem;
+        font-size: 0.875rem;
+    }
+    #id_title:focus, #id_category:focus, #id_gallery:focus, #id_published_at:focus {
+        outline: none;
+        ring: 2px;
+        ring-color: #229799;
+        border-color: transparent;
+    }
+    #id_meta_description {
+        width: 100%;
+        padding: 0.5rem 0.75rem;
+        border: 1px solid #d1d5db;
+        border-radius: 0.5rem;
+        font-size: 0.875rem;
+        font-family: 'IBM Plex Sans Thai', sans-serif;
+        min-height: 60px;
+    }
+    #id_is_published, #id_is_featured {
+        width: 1.125rem;
+        height: 1.125rem;
+        border-radius: 0.25rem;
+        border: 1px solid #d1d5db;
+    }
+
+    /* Quill Editor Custom Styling */
+    .ql-toolbar {
+        border-top-left-radius: 0.5rem;
+        border-top-right-radius: 0.5rem;
+        background-color: #f9fafb;
+        border-color: #d1d5db;
+    }
+    .ql-container {
+        border-bottom-left-radius: 0.5rem;
+        border-bottom-right-radius: 0.5rem;
+        border-color: #d1d5db;
+        font-family: 'IBM Plex Sans Thai', sans-serif;
+        font-size: 0.875rem;
+    }
+    .ql-editor {
+        min-height: inherit;
+    }
+    .ql-editor.ql-blank::before {
+        color: #9ca3af;
+        font-style: normal;
+    }
+</style>
+
+<!-- Quill Editor JS -->
+<script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+<script>
+    // Toolbar configuration
+    const toolbarOptions = [
+        ['bold', 'italic', 'underline', 'strike'],
+        ['blockquote', 'code-block'],
+        [{ 'header': 1 }, { 'header': 2 }],
+        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+        [{ 'indent': '-1'}, { 'indent': '+1' }],
+        [{ 'size': ['small', false, 'large', 'huge'] }],
+        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+        [{ 'color': [] }, { 'background': [] }],
+        [{ 'align': [] }],
+        ['link', 'image'],
+        ['clean']
+    ];
+
+    // Initialize Excerpt Editor
+    const excerptQuill = new Quill('#excerpt-editor', {
+        theme: 'snow',
+        modules: {
+            toolbar: toolbarOptions
+        },
+        placeholder: 'พิมพ์เนื้อหาย่อของข่าว...'
+    });
+
+    // Initialize Content Editor
+    const contentQuill = new Quill('#content-editor', {
+        theme: 'snow',
+        modules: {
+            toolbar: toolbarOptions
+        },
+        placeholder: 'พิมพ์เนื้อหาข่าวแบบละเอียด...'
+    });
+
+    // Load existing content if editing
+    const excerptTextarea = document.getElementById('id_excerpt');
+    const contentTextarea = document.getElementById('id_content');
+
+    if (excerptTextarea.value) {
+        excerptQuill.root.innerHTML = excerptTextarea.value;
+    }
+    if (contentTextarea.value) {
+        contentQuill.root.innerHTML = contentTextarea.value;
+    }
+
+    // Character counter for excerpt
+    function updateExcerptCount() {
+        const text = excerptQuill.getText();
+        const length = text.trim().length;
+        document.getElementById('excerpt-count').textContent = length;
+
+        // Warn if exceeding limit
+        const countElement = document.getElementById('excerpt-count');
+        if (length > 500) {
+            countElement.classList.add('text-red-600', 'font-bold');
+        } else {
+            countElement.classList.remove('text-red-600', 'font-bold');
+        }
+    }
+
+    // Update character count on text change
+    excerptQuill.on('text-change', updateExcerptCount);
+    updateExcerptCount(); // Initial count
+
+    // Sync editor content to hidden textareas on form submit
+    const form = document.querySelector('form');
+    form.addEventListener('submit', function(e) {
+        // Get HTML content from editors
+        excerptTextarea.value = excerptQuill.root.innerHTML;
+        contentTextarea.value = contentQuill.root.innerHTML;
+
+        // Validate content is not empty
+        const contentText = contentQuill.getText().trim();
+        if (!contentText || contentText.length === 0) {
+            e.preventDefault();
+            alert('กรุณากรอกเนื้อหาข่าว');
+            return false;
+        }
+
+        // Validate excerpt length
+        const excerptText = excerptQuill.getText().trim();
+        if (excerptText.length > 500) {
+            e.preventDefault();
+            alert('เนื้อหาย่อต้องไม่เกิน 500 ตัวอักษร (ปัจจุบัน: ' + excerptText.length + ' ตัวอักษร)');
+            return false;
+        }
+    });
+</script>
+{% endblock %}

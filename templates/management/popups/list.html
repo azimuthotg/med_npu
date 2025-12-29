@@ -1,0 +1,200 @@
+{% extends 'management/base.html' %}
+
+{% block title %}จัดการ Popup{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+
+    <!-- Header with Actions -->
+    <div class="flex items-center justify-between">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-800">จัดการ Popup</h1>
+            <p class="text-sm text-gray-500 mt-1">จัดการ Pop-up โฆษณาหน้าแรก</p>
+        </div>
+        <a href="{% url 'management:popup_create' %}"
+           class="px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-lg font-semibold transition flex items-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+            </svg>
+            สร้าง Popup ใหม่
+        </a>
+    </div>
+
+    <!-- Analytics Stats -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="bg-white p-6 rounded-lg shadow border-l-4 border-blue-500">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm text-gray-500 mb-1">Popup ทั้งหมด</p>
+                    <p class="text-3xl font-bold text-gray-800">{{ stats.total }}</p>
+                </div>
+                <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                    <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white p-6 rounded-lg shadow border-l-4 border-green-500">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm text-gray-500 mb-1">ใช้งานอยู่</p>
+                    <p class="text-3xl font-bold text-gray-800">{{ stats.active }}</p>
+                </div>
+                <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                    <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white p-6 rounded-lg shadow border-l-4 border-purple-500">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm text-gray-500 mb-1">จำนวนครั้งที่แสดง</p>
+                    <p class="text-3xl font-bold text-gray-800">{{ stats.total_views|default:0 }}</p>
+                </div>
+                <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                    <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white p-6 rounded-lg shadow border-l-4 border-orange-500">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm text-gray-500 mb-1">อัตราคลิก (CTR)</p>
+                    <p class="text-3xl font-bold text-gray-800">{{ stats.avg_ctr }}%</p>
+                </div>
+                <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
+                    <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search and Filter -->
+    <div class="bg-white rounded-lg shadow p-6">
+        <form method="get" class="flex gap-4">
+            <div class="flex-1">
+                <input type="text"
+                       name="search"
+                       value="{{ search }}"
+                       placeholder="ค้นหาจากหัวข้อ..."
+                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+            </div>
+            <select name="status"
+                    class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+                <option value="">-- สถานะทั้งหมด --</option>
+                <option value="active" {% if status == 'active' %}selected{% endif %}>ใช้งานอยู่</option>
+                <option value="inactive" {% if status == 'inactive' %}selected{% endif %}>ปิดใช้งาน</option>
+            </select>
+            <button type="submit"
+                    class="px-6 py-2 bg-gray-800 hover:bg-gray-900 text-white rounded-lg transition">
+                ค้นหา
+            </button>
+            {% if search or status %}
+            <a href="{% url 'management:popup_list' %}"
+               class="px-6 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg transition">
+                ล้าง
+            </a>
+            {% endif %}
+        </form>
+    </div>
+
+    <!-- Popup Table -->
+    <div class="bg-white rounded-lg shadow overflow-hidden">
+        <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">รูปภาพ</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">หัวข้อ</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">สถานะ</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Analytics</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">วันที่สร้าง</th>
+                    <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">จัดการ</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+                {% for popup in popups %}
+                <tr class="hover:bg-gray-50 transition">
+                    <td class="px-6 py-4">
+                        <img src="{{ popup.image.url }}" alt="{{ popup.title }}"
+                             class="w-20 h-16 object-cover rounded">
+                    </td>
+                    <td class="px-6 py-4">
+                        <div class="font-medium text-gray-800">{{ popup.title }}</div>
+                        <div class="text-sm text-gray-500">{{ popup.get_size_display }} • {{ popup.get_show_frequency_display }}</div>
+                    </td>
+                    <td class="px-6 py-4">
+                        {% if popup.is_active %}
+                        <span class="px-3 py-1 text-xs font-semibold text-green-800 bg-green-100 rounded-full">ใช้งาน</span>
+                        {% else %}
+                        <span class="px-3 py-1 text-xs font-semibold text-gray-800 bg-gray-100 rounded-full">ปิด</span>
+                        {% endif %}
+                    </td>
+                    <td class="px-6 py-4">
+                        <div class="text-sm">
+                            <div class="text-gray-800">👁️ {{ popup.view_count }} ครั้ง</div>
+                            <div class="text-gray-500">🖱️ {{ popup.click_count }} คลิก ({{ popup.click_rate }}%)</div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-500">
+                        {{ popup.created_at|date:"d M Y" }}
+                    </td>
+                    <td class="px-6 py-4 text-right space-x-2">
+                        <a href="{% url 'management:popup_edit' popup.pk %}"
+                           class="text-blue-600 hover:text-blue-800 font-medium">แก้ไข</a>
+                        <a href="{% url 'management:popup_delete' popup.pk %}"
+                           class="text-red-600 hover:text-red-800 font-medium">ลบ</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="px-6 py-12 text-center">
+                        <div class="text-gray-400">
+                            <svg class="w-16 h-16 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path>
+                            </svg>
+                            <p class="text-lg font-medium">ยังไม่มี Popup</p>
+                            <p class="text-sm mt-1">เริ่มสร้าง Popup แรกของคุณ</p>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    {% if is_paginated %}
+    <div class="flex items-center justify-between bg-white px-6 py-4 rounded-lg shadow">
+        <div class="text-sm text-gray-500">
+            แสดง {{ popups|length }} จาก {{ paginator.count }} รายการ
+        </div>
+        <div class="flex gap-2">
+            {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}"
+               class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition">
+                ก่อนหน้า
+            </a>
+            {% endif %}
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}"
+               class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition">
+                ถัดไป
+            </a>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+
+</div>
+{% endblock %}

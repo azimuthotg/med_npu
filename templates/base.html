@@ -1,0 +1,161 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{% block meta_description %}{{ SITE_DESCRIPTION }}{% endblock %}">
+    
+    <title>{% block title %}{{ SITE_NAME }}{% endblock %}</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS (CDN for development) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#E8F7F7',
+                            100: '#D1EFEF',
+                            200: '#A3DFDF',
+                            300: '#75CFCF',
+                            400: '#47BFBF',
+                            500: '#229799',
+                            600: '#1B7A7C',
+                            700: '#155D5E',
+                            800: '#0E4041',
+                            900: '#082323',
+                        },
+                    },
+                    fontFamily: {
+                        'thai': ['IBM Plex Sans Thai', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Custom Styles -->
+    <style>
+        body { font-family: 'IBM Plex Sans Thai', sans-serif; }
+        .gradient-hero { background: linear-gradient(135deg, #229799 0%, #155D5E 50%, #0E4041 100%); }
+        .card-hover { transition: all 0.3s ease; }
+        .card-hover:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(34, 151, 153, 0.15); }
+        .glass-effect { background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); }
+
+        /* Ribbon Fade-in Animation */
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        .ribbon-fade-in {
+            animation: fadeInScale 0.8s ease-out;
+        }
+
+        /* Ribbon Transition for JS control */
+        #mourning-ribbon {
+            transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+        }
+        #mourning-ribbon.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+    </style>
+    
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="bg-gray-50 font-thai">
+    
+    <!-- Top Bar -->
+    {% include 'components/topbar.html' %}
+    
+    <!-- Header / Navigation -->
+    {% include 'components/navbar.html' %}
+    
+    <!-- Flash Messages -->
+    {% if messages %}
+    <div class="container mx-auto px-4 mt-4">
+        {% for message in messages %}
+        <div class="p-4 rounded-lg mb-2 {% if message.tags == 'error' %}bg-red-100 text-red-700{% elif message.tags == 'success' %}bg-green-100 text-green-700{% else %}bg-blue-100 text-blue-700{% endif %}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    
+    <!-- Main Content -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    
+    <!-- Footer -->
+    {% include 'components/footer.html' %}
+
+    <!-- Ribbon Overlay (Mourning Badge) -->
+    <div id="mourning-ribbon" class="fixed top-2 right-4 z-[9999] ribbon-fade-in">
+        <div class="w-20 h-20 bg-white rounded-full shadow-xl flex items-center justify-center overflow-hidden">
+            <img src="{% static 'images/mourning-ribbon.png' %}"
+                 alt="Mourning Ribbon"
+                 class="w-full h-full object-cover"
+                 onerror="this.style.display='none'">
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Ribbon Auto-hide Controller with matchMedia
+        (function() {
+            const ribbon = document.getElementById('mourning-ribbon');
+            if (!ribbon) return;
+
+            const mobileQuery = window.matchMedia('(max-width: 767px)');
+            let hideTimeout = null;
+
+            function handleRibbonDisplay(e) {
+                // Clear any existing timeout
+                if (hideTimeout) {
+                    clearTimeout(hideTimeout);
+                    hideTimeout = null;
+                }
+
+                // Reset ribbon to visible state
+                ribbon.classList.remove('hidden');
+
+                if (e.matches) {
+                    // Mobile: Hide after 5 seconds
+                    hideTimeout = setTimeout(() => {
+                        ribbon.classList.add('hidden');
+                    }, 5000);
+                } else {
+                    // Desktop: Keep visible
+                    ribbon.classList.remove('hidden');
+                }
+            }
+
+            // Listen for breakpoint changes
+            mobileQuery.addEventListener('change', handleRibbonDisplay);
+
+            // Run on initial load
+            handleRibbonDisplay(mobileQuery);
+        })();
+    </script>
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

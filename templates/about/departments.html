@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block title %}ภาควิชา - {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+<!-- Header -->
+<section class="py-12 bg-primary-50">
+    <div class="container mx-auto px-4">
+        <nav class="mb-4 text-sm">
+            <ol class="flex items-center gap-2 text-gray-500">
+                <li><a href="{% url 'core:home' %}" class="hover:text-primary-500">หน้าหลัก</a></li>
+                <li>/</li>
+                <li><a href="{% url 'about:index' %}" class="hover:text-primary-500">เกี่ยวกับคณะ</a></li>
+                <li>/</li>
+                <li class="text-gray-800">ภาควิชา</li>
+            </ol>
+        </nav>
+        <h1 class="text-3xl font-bold text-gray-800 mb-2">ภาควิชา/หน่วยงาน</h1>
+        <p class="text-gray-500">ภาควิชาและหน่วยงานภายในคณะแพทยศาสตร์</p>
+    </div>
+</section>
+
+<!-- Content -->
+<section class="py-12">
+    <div class="container mx-auto px-4">
+        <div class="grid lg:grid-cols-4 gap-8">
+            <!-- Sidebar -->
+            <aside class="lg:col-span-1">
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 sticky top-24">
+                    <h3 class="font-bold text-gray-800 mb-4">เกี่ยวกับคณะ</h3>
+                    <nav class="space-y-2">
+                        <a href="{% url 'about:history' %}" class="block px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-50 transition">ประวัติความเป็นมา</a>
+                        <a href="{% url 'about:vision_mission' %}" class="block px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-50 transition">วิสัยทัศน์/พันธกิจ</a>
+                        <a href="{% url 'about:executives' %}" class="block px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-50 transition">ผู้บริหาร</a>
+                        <a href="{% url 'about:departments' %}" class="block px-4 py-2 rounded-lg bg-primary-50 text-primary-600 font-medium">ภาควิชา</a>
+                        <a href="{% url 'about:organization' %}" class="block px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-50 transition">โครงสร้างองค์กร</a>
+                        <a href="{% url 'about:personnel' %}" class="block px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-50 transition">บุคลากร</a>
+                    </nav>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <div class="lg:col-span-3">
+        <div class="grid md:grid-cols-2 gap-6">
+            {% for dept in departments %}
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 card-hover">
+                <div class="flex items-start gap-4">
+                    <div class="w-14 h-14 bg-primary-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                        <span class="text-2xl">🏢</span>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-bold text-gray-800 mb-1">{{ dept.name }}</h3>
+                        {% if dept.name_en %}
+                        <p class="text-gray-400 text-sm mb-3">{{ dept.name_en }}</p>
+                        {% endif %}
+                        {% if dept.head %}
+                        <p class="text-gray-600 text-sm">
+                            <span class="font-medium">หัวหน้า:</span> {{ dept.head.full_name }}
+                        </p>
+                        {% endif %}
+                        {% if dept.phone %}
+                        <p class="text-gray-500 text-sm mt-2">
+                            <span class="font-medium">โทร:</span> {{ dept.phone }}
+                        </p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-span-3 text-center py-12">
+                <div class="w-24 h-24 bg-gray-100 rounded-full mx-auto mb-4 flex items-center justify-center">
+                    <span class="text-4xl">🏢</span>
+                </div>
+                <p class="text-gray-500">ยังไม่มีข้อมูลภาควิชา</p>
+                <p class="text-gray-400 text-sm mt-2">กรุณาเพิ่มข้อมูลผ่านระบบ Admin</p>
+            </div>
+            {% endfor %}
+        </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

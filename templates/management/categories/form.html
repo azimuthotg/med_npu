@@ -1,0 +1,123 @@
+{% extends 'management/base.html' %}
+
+{% block title %}{{ form_title }}{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+
+    <!-- Header -->
+    <div class="mb-6">
+        <a href="{% url 'management:category_list' %}" class="text-primary-600 hover:text-primary-700 text-sm mb-2 inline-flex items-center">
+            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+            </svg>
+            กลับไปรายการหมวดหมู่
+        </a>
+        <h1 class="text-2xl font-bold text-gray-800 mt-2">{{ form_title }}</h1>
+    </div>
+
+    <!-- Form -->
+    <form method="post" class="space-y-6">
+        {% csrf_token %}
+
+        <!-- Main Card -->
+        <div class="bg-white rounded-lg shadow p-6">
+            <h3 class="text-lg font-semibold text-gray-800 mb-4">ข้อมูลหมวดหมู่</h3>
+
+            <!-- Name -->
+            <div class="mb-4">
+                <label for="id_name" class="block text-sm font-medium text-gray-700 mb-2">
+                    ชื่อหมวดหมู่ <span class="text-red-500">*</span>
+                </label>
+                <input type="text" name="name" id="id_name" value="{{ form.name.value|default:'' }}"
+                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                       placeholder="เช่น ข่าวกิจกรรม, ข่าวประกาศ"
+                       required>
+                {% if form.name.errors %}
+                <p class="mt-1 text-sm text-red-600">{{ form.name.errors.0 }}</p>
+                {% endif %}
+                <p class="mt-1 text-xs text-gray-500">ชื่อหมวดหมู่ที่จะแสดงในหน้าเว็บไซต์</p>
+            </div>
+
+            <!-- Slug -->
+            <div class="mb-4">
+                <label for="id_slug" class="block text-sm font-medium text-gray-700 mb-2">
+                    Slug <span class="text-gray-400 text-xs">(ไม่บังคับ)</span>
+                </label>
+                <input type="text" name="slug" id="id_slug" value="{{ form.slug.value|default:'' }}"
+                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent font-mono"
+                       placeholder="auto-generated-from-name">
+                {% if form.slug.errors %}
+                <p class="mt-1 text-sm text-red-600">{{ form.slug.errors.0 }}</p>
+                {% endif %}
+                <div class="mt-2 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                    <p class="text-xs font-medium text-blue-800 mb-1">💡 Slug คืออะไร?</p>
+                    <ul class="text-xs text-blue-700 space-y-1">
+                        <li>• <strong>Slug</strong> คือ ชื่อที่ใช้ใน URL แบบอ่านง่าย (URL-friendly)</li>
+                        <li>• <strong>ตัวอย่าง:</strong> ชื่อ "ข่าวกิจกรรม" → Slug "ขาวกจกรรม"</li>
+                        <li>• <strong>คำแนะนำ:</strong> ปล่อยว่างไว้ ระบบจะสร้างให้อัตโนมัติจากชื่อหมวดหมู่</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Color -->
+            <div class="mb-4">
+                <label for="id_color" class="block text-sm font-medium text-gray-700 mb-2">
+                    สี <span class="text-red-500">*</span>
+                </label>
+                <select name="color" id="id_color"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                        required>
+                    <option value="primary" {% if form.color.value == 'primary' or not form.color.value %}selected{% endif %}>
+                        Primary (Teal)
+                    </option>
+                    <option value="blue" {% if form.color.value == 'blue' %}selected{% endif %}>
+                        Blue (น้ำเงิน)
+                    </option>
+                    <option value="green" {% if form.color.value == 'green' %}selected{% endif %}>
+                        Green (เขียว)
+                    </option>
+                    <option value="purple" {% if form.color.value == 'purple' %}selected{% endif %}>
+                        Purple (ม่วง)
+                    </option>
+                    <option value="orange" {% if form.color.value == 'orange' %}selected{% endif %}>
+                        Orange (ส้ม)
+                    </option>
+                    <option value="red" {% if form.color.value == 'red' %}selected{% endif %}>
+                        Red (แดง)
+                    </option>
+                    <option value="yellow" {% if form.color.value == 'yellow' %}selected{% endif %}>
+                        Yellow (เหลือง)
+                    </option>
+                    <option value="pink" {% if form.color.value == 'pink' %}selected{% endif %}>
+                        Pink (ชมพู)
+                    </option>
+                    <option value="indigo" {% if form.color.value == 'indigo' %}selected{% endif %}>
+                        Indigo (คราม)
+                    </option>
+                    <option value="gray" {% if form.color.value == 'gray' %}selected{% endif %}>
+                        Gray (เทา)
+                    </option>
+                </select>
+                {% if form.color.errors %}
+                <p class="mt-1 text-sm text-red-600">{{ form.color.errors.0 }}</p>
+                {% endif %}
+                <p class="mt-1 text-xs text-gray-500">สีที่ใช้แสดงแท็กหมวดหมู่ในหน้าข่าว</p>
+            </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="flex items-center justify-end space-x-3">
+            <a href="{% url 'management:category_list' %}"
+               class="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition">
+                ยกเลิก
+            </a>
+            <button type="submit"
+                    class="px-6 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition">
+                {{ submit_text }}
+            </button>
+        </div>
+    </form>
+
+</div>
+{% endblock %}

@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+
+{% block title %}ศูนย์การดาวน์โหลด - {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+<!-- Header -->
+<section class="py-12 bg-primary-50">
+    <div class="container mx-auto px-4">
+        <nav class="mb-4 text-sm">
+            <ol class="flex items-center gap-2 text-gray-500">
+                <li><a href="{% url 'core:home' %}" class="hover:text-primary-500">หน้าหลัก</a></li>
+                <li>/</li>
+                <li class="text-gray-800">ศูนย์การดาวน์โหลด</li>
+            </ol>
+        </nav>
+        <h1 class="text-3xl font-bold text-gray-800 mb-2">ศูนย์การดาวน์โหลด</h1>
+        <p class="text-gray-500">เอกสารและแบบฟอร์มต่างๆ ของคณะแพทยศาสตร์</p>
+    </div>
+</section>
+
+<!-- Content -->
+<section class="py-12">
+    <div class="container mx-auto px-4">
+        <div class="grid lg:grid-cols-4 gap-8">
+            <!-- Sidebar -->
+            <aside class="lg:col-span-1">
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 sticky top-24">
+                    <h3 class="font-bold text-gray-800 mb-4">ประเภทเอกสาร</h3>
+                    <nav class="space-y-2">
+                        <a href="#general" class="block px-4 py-2 rounded-lg bg-primary-50 text-primary-600 font-medium">เอกสารทั่วไป</a>
+                        <a href="#forms" class="block px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-50 transition">แบบฟอร์ม</a>
+                        <a href="#manuals" class="block px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-50 transition">คู่มือ</a>
+                        <a href="#reports" class="block px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-50 transition">รายงาน</a>
+                        <a href="#regulations" class="block px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-50 transition">ระเบียบ/ข้อบังคับ</a>
+                        <a href="#templates" class="block px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-50 transition">เทมเพลต</a>
+                    </nav>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <div class="lg:col-span-3">
+                <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
+                    <!-- General Documents -->
+                    <div id="general" class="mb-12">
+                        <h2 class="text-2xl font-bold text-primary-600 mb-6 flex items-center gap-2">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                            </svg>
+                            เอกสารทั่วไป
+                        </h2>
+                        <div class="space-y-3">
+                            <p class="text-gray-500 text-center py-8">ยังไม่มีเอกสารในหมวดหมู่นี้</p>
+                        </div>
+                    </div>
+
+                    <!-- Forms -->
+                    <div id="forms" class="mb-12">
+                        <h2 class="text-2xl font-bold text-primary-600 mb-6 flex items-center gap-2">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                            </svg>
+                            แบบฟอร์ม
+                        </h2>
+                        <div class="space-y-3">
+                            <p class="text-gray-500 text-center py-8">ยังไม่มีเอกสารในหมวดหมู่นี้</p>
+                        </div>
+                    </div>
+
+                    <!-- Manuals -->
+                    <div id="manuals" class="mb-12">
+                        <h2 class="text-2xl font-bold text-primary-600 mb-6 flex items-center gap-2">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                            </svg>
+                            คู่มือ
+                        </h2>
+                        <div class="space-y-3">
+                            <p class="text-gray-500 text-center py-8">ยังไม่มีเอกสารในหมวดหมู่นี้</p>
+                        </div>
+                    </div>
+
+                    <!-- Reports -->
+                    <div id="reports" class="mb-12">
+                        <h2 class="text-2xl font-bold text-primary-600 mb-6 flex items-center gap-2">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                            </svg>
+                            รายงาน
+                        </h2>
+                        <div class="space-y-3">
+                            <p class="text-gray-500 text-center py-8">ยังไม่มีเอกสารในหมวดหมู่นี้</p>
+                        </div>
+                    </div>
+
+                    <!-- Regulations -->
+                    <div id="regulations" class="mb-12">
+                        <h2 class="text-2xl font-bold text-primary-600 mb-6 flex items-center gap-2">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                            </svg>
+                            ระเบียบ/ข้อบังคับ
+                        </h2>
+                        <div class="space-y-3">
+                            <p class="text-gray-500 text-center py-8">ยังไม่มีเอกสารในหมวดหมู่นี้</p>
+                        </div>
+                    </div>
+
+                    <!-- Templates -->
+                    <div id="templates">
+                        <h2 class="text-2xl font-bold text-primary-600 mb-6 flex items-center gap-2">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"/>
+                            </svg>
+                            เทมเพลต
+                        </h2>
+                        <div class="space-y-3">
+                            <p class="text-gray-500 text-center py-8">ยังไม่มีเอกสารในหมวดหมู่นี้</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends 'management/base.html' %}
+
+{% block content %}
+<div class="space-y-6">
+    <!-- Header -->
+    <div class="flex items-center justify-between">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-800">{{ page_title }}</h1>
+            <p class="text-sm text-gray-500 mt-1">{{ page_subtitle }}</p>
+        </div>
+        {% if create_url %}
+        <a href="{{ create_url }}"
+           class="inline-flex items-center px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+            </svg>
+            {{ create_text|default:"สร้างใหม่" }}
+        </a>
+        {% endif %}
+    </div>
+
+    <!-- List Content -->
+    {% block list_content %}
+    <div class="bg-white rounded-lg shadow p-6">
+        {% if object_list %}
+        <div class="space-y-3">
+            {% for obj in object_list %}
+            <div class="flex items-center justify-between p-4 rounded-lg hover:bg-gray-50 transition border border-gray-200">
+                <div class="flex-1">
+                    {% block item_content %}
+                    <p class="font-medium text-gray-900">{{ obj }}</p>
+                    {% endblock %}
+                </div>
+                <div class="flex space-x-2">
+                    {% block item_actions %}
+                    {% if edit_url_name %}
+                    <a href="{% url edit_url_name obj.pk %}"
+                       class="px-3 py-1 text-sm text-green-600 hover:text-green-700">แก้ไข</a>
+                    {% endif %}
+                    {% if delete_url_name %}
+                    <a href="{% url delete_url_name obj.pk %}"
+                       class="px-3 py-1 text-sm text-red-600 hover:text-red-700">ลบ</a>
+                    {% endif %}
+                    {% endblock %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p class="text-center text-gray-500 py-8">ยังไม่มีข้อมูล</p>
+        {% endif %}
+    </div>
+    {% endblock %}
+</div>
+{% endblock %}

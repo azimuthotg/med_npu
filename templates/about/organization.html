@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+
+{% block title %}โครงสร้างองค์กร - {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+<!-- Header -->
+<section class="py-12 bg-primary-50">
+    <div class="container mx-auto px-4">
+        <nav class="mb-4 text-sm">
+            <ol class="flex items-center gap-2 text-gray-500">
+                <li><a href="{% url 'core:home' %}" class="hover:text-primary-500">หน้าหลัก</a></li>
+                <li>/</li>
+                <li><a href="{% url 'about:index' %}" class="hover:text-primary-500">เกี่ยวกับคณะ</a></li>
+                <li>/</li>
+                <li class="text-gray-800">โครงสร้างองค์กร</li>
+            </ol>
+        </nav>
+        <h1 class="text-3xl font-bold text-gray-800 mb-2">โครงสร้างองค์กร</h1>
+        <p class="text-gray-500">แผนผังโครงสร้างองค์กรคณะแพทยศาสตร์</p>
+    </div>
+</section>
+
+<!-- Content -->
+<section class="py-12">
+    <div class="container mx-auto px-4">
+        <div class="grid lg:grid-cols-4 gap-8">
+            <!-- Sidebar -->
+            <aside class="lg:col-span-1">
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 sticky top-24">
+                    <h3 class="font-bold text-gray-800 mb-4">เกี่ยวกับคณะ</h3>
+                    <nav class="space-y-2">
+                        <a href="{% url 'about:history' %}" class="block px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-50 transition">ประวัติความเป็นมา</a>
+                        <a href="{% url 'about:vision_mission' %}" class="block px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-50 transition">วิสัยทัศน์/พันธกิจ</a>
+                        <a href="{% url 'about:executives' %}" class="block px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-50 transition">ผู้บริหาร</a>
+                        <a href="{% url 'about:departments' %}" class="block px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-50 transition">ภาควิชา</a>
+                        <a href="{% url 'about:organization' %}" class="block px-4 py-2 rounded-lg bg-primary-50 text-primary-600 font-medium">โครงสร้างองค์กร</a>
+                        <a href="{% url 'about:personnel' %}" class="block px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-50 transition">บุคลากร</a>
+                    </nav>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <div class="lg:col-span-3">
+            <!-- Organization Chart -->
+            <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 mb-8">
+                <div class="text-center">
+                    <!-- Dean -->
+                    <div class="inline-block bg-primary-500 text-white px-8 py-4 rounded-xl font-bold mb-8">
+                        คณบดี
+                    </div>
+                    
+                    <div class="w-px h-8 bg-gray-300 mx-auto"></div>
+                    
+                    <!-- Vice Deans -->
+                    <div class="flex justify-center gap-4 flex-wrap mb-8">
+                        <div class="bg-primary-100 text-primary-700 px-6 py-3 rounded-lg font-medium">
+                            รองคณบดีฝ่ายวิชาการ
+                        </div>
+                        <div class="bg-primary-100 text-primary-700 px-6 py-3 rounded-lg font-medium">
+                            รองคณบดีฝ่ายบริหาร
+                        </div>
+                        <div class="bg-primary-100 text-primary-700 px-6 py-3 rounded-lg font-medium">
+                            รองคณบดีฝ่ายวิจัย
+                        </div>
+                        <div class="bg-primary-100 text-primary-700 px-6 py-3 rounded-lg font-medium">
+                            รองคณบดีฝ่ายกิจการนักศึกษา
+                        </div>
+                    </div>
+                    
+                    <div class="w-full h-px bg-gray-300 mb-8"></div>
+                    
+                    <!-- Departments -->
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">ภาควิชา</h3>
+                    <div class="grid md:grid-cols-3 gap-4 mb-8">
+                        <div class="bg-gray-50 px-4 py-3 rounded-lg text-gray-700">ภาควิชาพรีคลินิก</div>
+                        <div class="bg-gray-50 px-4 py-3 rounded-lg text-gray-700">ภาควิชาอายุรศาสตร์</div>
+                        <div class="bg-gray-50 px-4 py-3 rounded-lg text-gray-700">ภาควิชาศัลยศาสตร์</div>
+                        <div class="bg-gray-50 px-4 py-3 rounded-lg text-gray-700">ภาควิชากุมารเวชศาสตร์</div>
+                        <div class="bg-gray-50 px-4 py-3 rounded-lg text-gray-700">ภาควิชาสูติศาสตร์-นรีเวชวิทยา</div>
+                        <div class="bg-gray-50 px-4 py-3 rounded-lg text-gray-700">ภาควิชาเวชศาสตร์ชุมชน</div>
+                    </div>
+                    
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">หน่วยงานสนับสนุน</h3>
+                    <div class="grid md:grid-cols-4 gap-3">
+                        <div class="bg-gray-50 px-3 py-2 rounded-lg text-gray-600 text-sm">สำนักงานคณบดี</div>
+                        <div class="bg-gray-50 px-3 py-2 rounded-lg text-gray-600 text-sm">งานบริการการศึกษา</div>
+                        <div class="bg-gray-50 px-3 py-2 rounded-lg text-gray-600 text-sm">งานวิจัยและวิเทศสัมพันธ์</div>
+                        <div class="bg-gray-50 px-3 py-2 rounded-lg text-gray-600 text-sm">งานประกันคุณภาพ</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Download -->
+            <div class="text-center">
+                <p class="text-gray-500 mb-4">ดาวน์โหลดแผนผังโครงสร้างองค์กรฉบับเต็ม</p>
+                <button class="px-6 py-3 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition inline-flex items-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                    </svg>
+                    ดาวน์โหลด PDF
+                </button>
+            </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ gallery.title }} - {{ SITE_NAME }}{% endblock %}
+{% block meta_description %}{{ gallery.description }}{% endblock %}
+
+{% block content %}
+<article class="py-12">
+    <div class="container mx-auto px-4">
+        <div class="max-w-6xl mx-auto">
+            <!-- Breadcrumb -->
+            <nav class="mb-6 text-sm">
+                <ol class="flex items-center gap-2 text-gray-500">
+                    <li><a href="{% url 'core:home' %}" class="hover:text-primary-500">หน้าหลัก</a></li>
+                    <li>/</li>
+                    <li><a href="{% url 'gallery:list' %}" class="hover:text-primary-500">อัลบั้มภาพกิจกรรม</a></li>
+                    <li>/</li>
+                    <li class="text-gray-800">{{ gallery.title|truncatechars:30 }}</li>
+                </ol>
+            </nav>
+
+            <!-- Header -->
+            <header class="mb-8">
+                <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">{{ gallery.title }}</h1>
+                <div class="flex items-center gap-4 text-gray-500 text-sm">
+                    {% if gallery.event_date %}
+                    <span>
+                        <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        </svg>
+                        {{ gallery.event_date|date:"j F Y" }}
+                    </span>
+                    <span>•</span>
+                    {% endif %}
+                    <span>{{ images.count }} รูปภาพ</span>
+                </div>
+                {% if gallery.description %}
+                <p class="text-gray-600 mt-4">{{ gallery.description }}</p>
+                {% endif %}
+            </header>
+
+            <!-- Gallery Grid with Alpine.js Lightbox -->
+            {% if images %}
+            <div x-data="{
+                lightbox: false,
+                currentIndex: 0,
+                images: {{ images|length }},
+                nextImage() {
+                    this.currentIndex = (this.currentIndex + 1) % this.images;
+                },
+                prevImage() {
+                    this.currentIndex = (this.currentIndex - 1 + this.images) % this.images;
+                }
+            }" @keydown.escape.window="lightbox = false"
+                 @keydown.arrow-right.window="lightbox && nextImage()"
+                 @keydown.arrow-left.window="lightbox && prevImage()"
+                 class="relative">
+
+                <!-- Gallery Grid -->
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    {% for image in images %}
+                    <div @click="currentIndex = {{ forloop.counter0 }}; lightbox = true"
+                         class="aspect-square bg-gray-100 rounded-lg overflow-hidden cursor-pointer hover:opacity-90 transition group relative">
+                        <img src="{{ image.thumbnail.url|default:image.medium.url }}"
+                             alt="{{ image.caption|default:'รูปภาพ' }}"
+                             class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
+
+                        <!-- Overlay -->
+                        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition flex items-center justify-center">
+                            <svg class="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"></path>
+                            </svg>
+                        </div>
+
+                        {% if image.caption %}
+                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-2">
+                            <p class="text-white text-xs line-clamp-2">{{ image.caption }}</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Lightbox -->
+                <div x-show="lightbox"
+                     x-transition.opacity
+                     class="fixed inset-0 bg-black bg-opacity-95 z-50 flex items-center justify-center p-4"
+                     @click.self="lightbox = false">
+
+                    <!-- Close Button -->
+                    <button @click="lightbox = false"
+                            class="absolute top-4 right-4 text-white hover:text-gray-300 z-10">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+
+                    <!-- Previous Button -->
+                    <button @click="prevImage()"
+                            class="absolute left-4 text-white hover:text-gray-300 z-10">
+                        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                        </svg>
+                    </button>
+
+                    <!-- Next Button -->
+                    <button @click="nextImage()"
+                            class="absolute right-4 text-white hover:text-gray-300 z-10">
+                        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </button>
+
+                    <!-- Image Container -->
+                    <div class="max-w-5xl max-h-full">
+                        {% for image in images %}
+                        <div x-show="currentIndex === {{ forloop.counter0 }}"
+                             class="flex flex-col items-center">
+                            <img src="{{ image.image.url }}"
+                                 alt="{{ image.caption|default:'รูปภาพ' }}"
+                                 class="max-h-[80vh] max-w-full object-contain rounded-lg">
+
+                            {% if image.caption %}
+                            <p class="text-white mt-4 text-center max-w-2xl">{{ image.caption }}</p>
+                            {% endif %}
+
+                            <!-- Counter -->
+                            <p class="text-white text-sm mt-2 opacity-75">
+                                {{ forloop.counter }} / {{ images.count }}
+                            </p>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                </div>
+            </div>
+            {% else %}
+            <div class="text-center py-12 text-gray-500">
+                <svg class="w-16 h-16 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                </svg>
+                <p>ยังไม่มีรูปภาพในอัลบั้มนี้</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</article>
+{% endblock %}

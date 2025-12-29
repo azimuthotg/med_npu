@@ -1,0 +1,46 @@
+# Django
+Django>=5.0,<6.0
+
+# Database
+mysqlclient>=2.2.0
+# หรือใช้ PyMySQL
+# PyMySQL>=1.1.0
+
+# Image handling
+Pillow>=10.0.0
+
+# Environment variables
+python-decouple>=3.8
+
+# Django extensions
+django-extensions>=3.2.3
+
+# Static files
+whitenoise>=6.6.0
+
+# Debug toolbar (development)
+django-debug-toolbar>=4.2.0
+
+# WYSIWYG Editor
+django-ckeditor>=6.7.0
+
+# Slug auto-generate
+django-autoslug>=1.9.9
+
+# Tagging
+django-taggit>=5.0.0
+
+# SEO
+django-meta>=2.4.1
+
+# Sitemap (built-in Django)
+# RSS Feed (built-in Django)
+
+# Optional: HTMX support
+# django-htmx>=1.17.0
+
+# Optional: Tailwind CSS (if using django-tailwind)
+# django-tailwind>=3.8.0
+
+# Production
+gunicorn>=21.2.0

@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+
+{% block title %}บุคลากรชั้นคลินิก - {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+<!-- Header -->
+<section class="py-12 bg-primary-50">
+    <div class="container mx-auto px-4">
+        <nav class="mb-4 text-sm">
+            <ol class="flex items-center gap-2 text-gray-500">
+                <li><a href="{% url 'core:home' %}" class="hover:text-primary-500">หน้าหลัก</a></li>
+                <li>/</li>
+                <li><a href="{% url 'about:index' %}" class="hover:text-primary-500">เกี่ยวกับคณะ</a></li>
+                <li>/</li>
+                <li><a href="{% url 'about:personnel' %}" class="hover:text-primary-500">บุคลากร</a></li>
+                <li>/</li>
+                <li class="text-gray-800">บุคลากรชั้นคลินิก</li>
+            </ol>
+        </nav>
+        <h1 class="text-3xl font-bold text-gray-800 mb-2">บุคลากรชั้นคลินิก</h1>
+        <p class="text-gray-500">แพทย์เฉพาะทางและบุคลากรทางคลินิก</p>
+    </div>
+</section>
+
+<!-- Content -->
+<section class="py-12">
+    <div class="container mx-auto px-4">
+        <div class="grid lg:grid-cols-4 gap-8">
+            <!-- Sidebar -->
+            <aside class="lg:col-span-1">
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 sticky top-24">
+                    <h3 class="font-bold text-gray-800 mb-4">เกี่ยวกับคณะ</h3>
+                    <nav class="space-y-2">
+                        <a href="{% url 'about:history' %}" class="block px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-50 transition">ประวัติความเป็นมา</a>
+                        <a href="{% url 'about:vision_mission' %}" class="block px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-50 transition">วิสัยทัศน์/พันธกิจ</a>
+                        <a href="{% url 'about:executives' %}" class="block px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-50 transition">ผู้บริหาร</a>
+                        <a href="{% url 'about:departments' %}" class="block px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-50 transition">ภาควิชา</a>
+                        <a href="{% url 'about:organization' %}" class="block px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-50 transition">โครงสร้างองค์กร</a>
+                        <a href="{% url 'about:personnel' %}" class="block px-4 py-2 rounded-lg bg-primary-50 text-primary-600 font-medium">บุคลากร</a>
+                    </nav>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <div class="lg:col-span-3">
+                <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
+                    <div class="prose prose-lg max-w-none">
+                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
+                            <p class="text-blue-800 mb-0">
+                                <strong>📌 หน้านี้อยู่ระหว่างการพัฒนา</strong><br>
+                                ข้อมูลบุคลากรชั้นคลินิกจะถูกเพิ่มเติมในอนาคต
+                            </p>
+                        </div>
+
+                        <h2 class="text-2xl font-bold text-primary-600 mb-6">บุคลากรชั้นคลินิก</h2>
+
+                        <p class="text-gray-600 leading-relaxed mb-6">
+                            บุคลากรชั้นคลินิก คณะแพทยศาสตร์ มหาวิทยาลัยนครพนม ประกอบด้วยแพทย์เฉพาะทางและบุคลากรทางการแพทย์ที่มีประสบการณ์ในการดูแลผู้ป่วย
+                        </p>
+
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">สาขาวิชาเอก</h3>
+
+                        <h4 class="text-lg font-semibold text-gray-800 mb-3">🏥 กลุ่มอายุรศาสตร์</h4>
+                        <ul class="mb-6">
+                            <li>อายุรศาสตร์ทั่วไป</li>
+                            <li>โรคหัวใจและหลอดเลือด</li>
+                            <li>ระบบทางเดินอาหาร</li>
+                            <li>โรคไต</li>
+                            <li>โรคต่อมไร้ท่อ</li>
+                        </ul>
+
+                        <h4 class="text-lg font-semibold text-gray-800 mb-3">⚕️ กลุ่มศัลยศาสตร์</h4>
+                        <ul class="mb-6">
+                            <li>ศัลยศาสตร์ทั่วไป</li>
+                            <li>ศัลยศาสตร์กระดูกและข้อ</li>
+                            <li>ศัลยศาสตร์ระบบประสาท</li>
+                            <li>ศัลยศาสตร์ทรวงอก</li>
+                        </ul>
+
+                        <h4 class="text-lg font-semibold text-gray-800 mb-3">👶 กลุ่มสูติ-นรีเวชกรรมและกุมารเวชกรรม</h4>
+                        <ul class="mb-6">
+                            <li>สูติ-นรีเวชศาสตร์</li>
+                            <li>กุมารเวชศาสตร์</li>
+                            <li>พัฒนาการเด็ก</li>
+                        </ul>
+
+                        <h4 class="text-lg font-semibold text-gray-800 mb-3">🧠 กลุ่มวิชาชีพสนับสนุน</h4>
+                        <ul class="mb-6">
+                            <li>จักษุวิทยา</li>
+                            <li>โสต ศอ นาสิก</li>
+                            <li>จิตเวชศาสตร์</li>
+                            <li>รังสีวิทยา</li>
+                            <li>วิสัญญีวิทยา</li>
+                            <li>เวชศาสตร์ฉุกเฉิน</li>
+                            <li>เวชศาสตร์ครอบครัว</li>
+                        </ul>
+
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">ภาระงาน</h3>
+                        <div class="bg-gray-50 rounded-xl p-6">
+                            <ul class="mb-0 space-y-2">
+                                <li class="flex items-start gap-2">
+                                    <span class="text-primary-600 mt-1">•</span>
+                                    <span>การเรียนการสอนนักศึกษาแพทย์ชั้นคลินิก (ปีที่ 4-6)</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-primary-600 mt-1">•</span>
+                                    <span>การดูแลรักษาผู้ป่วย</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-primary-600 mt-1">•</span>
+                                    <span>การวิจัยทางคลินิก</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-primary-600 mt-1">•</span>
+                                    <span>การให้บริการวิชาการแก่โรงพยาบาลเครือข่าย</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

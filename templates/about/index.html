@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %}เกี่ยวกับคณะ - {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+<section class="py-12 bg-primary-50">
+    <div class="container mx-auto px-4">
+        <h1 class="text-3xl font-bold text-gray-800 mb-2">เกี่ยวกับคณะ</h1>
+        <p class="text-gray-500">รู้จักคณะแพทยศาสตร์ มหาวิทยาลัยนครพนม</p>
+    </div>
+</section>
+
+<section class="py-12">
+    <div class="container mx-auto px-4">
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <a href="{% url 'about:history' %}" class="card-hover bg-white rounded-2xl p-8 shadow-sm border border-gray-100 group">
+                <div class="w-16 h-16 bg-primary-100 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-primary-500 transition">
+                    <span class="text-3xl">📜</span>
+                </div>
+                <h2 class="text-xl font-bold text-gray-800 mb-2 group-hover:text-primary-600 transition">ประวัติความเป็นมา</h2>
+                <p class="text-gray-500">เรียนรู้ประวัติและความเป็นมาของคณะแพทยศาสตร์</p>
+            </a>
+            
+            <a href="{% url 'about:vision_mission' %}" class="card-hover bg-white rounded-2xl p-8 shadow-sm border border-gray-100 group">
+                <div class="w-16 h-16 bg-primary-100 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-primary-500 transition">
+                    <span class="text-3xl">🎯</span>
+                </div>
+                <h2 class="text-xl font-bold text-gray-800 mb-2 group-hover:text-primary-600 transition">วิสัยทัศน์/พันธกิจ</h2>
+                <p class="text-gray-500">เป้าหมายและทิศทางการดำเนินงานของคณะ</p>
+            </a>
+            
+            <a href="{% url 'about:executives' %}" class="card-hover bg-white rounded-2xl p-8 shadow-sm border border-gray-100 group">
+                <div class="w-16 h-16 bg-primary-100 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-primary-500 transition">
+                    <span class="text-3xl">👨‍💼</span>
+                </div>
+                <h2 class="text-xl font-bold text-gray-800 mb-2 group-hover:text-primary-600 transition">ผู้บริหาร</h2>
+                <p class="text-gray-500">ทำความรู้จักคณะผู้บริหารของคณะ</p>
+            </a>
+            
+            <a href="{% url 'about:departments' %}" class="card-hover bg-white rounded-2xl p-8 shadow-sm border border-gray-100 group">
+                <div class="w-16 h-16 bg-primary-100 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-primary-500 transition">
+                    <span class="text-3xl">🏢</span>
+                </div>
+                <h2 class="text-xl font-bold text-gray-800 mb-2 group-hover:text-primary-600 transition">ภาควิชา/หน่วยงาน</h2>
+                <p class="text-gray-500">ภาควิชาและหน่วยงานภายในคณะ</p>
+            </a>
+            
+            <a href="{% url 'about:organization' %}" class="card-hover bg-white rounded-2xl p-8 shadow-sm border border-gray-100 group">
+                <div class="w-16 h-16 bg-primary-100 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-primary-500 transition">
+                    <span class="text-3xl">🏗️</span>
+                </div>
+                <h2 class="text-xl font-bold text-gray-800 mb-2 group-hover:text-primary-600 transition">โครงสร้างองค์กร</h2>
+                <p class="text-gray-500">แผนผังโครงสร้างองค์กรของคณะ</p>
+            </a>
+
+            <a href="{% url 'about:personnel' %}" class="card-hover bg-white rounded-2xl p-8 shadow-sm border border-gray-100 group">
+                <div class="w-16 h-16 bg-primary-100 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-primary-500 transition">
+                    <span class="text-3xl">👥</span>
+                </div>
+                <h2 class="text-xl font-bold text-gray-800 mb-2 group-hover:text-primary-600 transition">บุคลากร</h2>
+                <p class="text-gray-500">ทีมงานและบุคลากรของคณะแพทยศาสตร์</p>
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends 'management/base.html' %}
+
+{% block title %}ลบ Popup{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto">
+
+    <!-- Header -->
+    <div class="mb-6">
+        <h1 class="text-2xl font-bold text-gray-800">ยืนยันการลบ Popup</h1>
+        <p class="text-sm text-gray-500 mt-1">การดำเนินการนี้ไม่สามารถย้อนกลับได้</p>
+    </div>
+
+    <!-- Warning Card -->
+    <div class="bg-red-50 border-l-4 border-red-500 rounded-lg p-6 mb-6">
+        <div class="flex items-start">
+            <svg class="w-6 h-6 text-red-600 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+            </svg>
+            <div>
+                <h3 class="text-lg font-semibold text-red-800 mb-2">คำเตือน!</h3>
+                <p class="text-red-700">คุณกำลังจะลบ Popup ต่อไปนี้:</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Popup Details -->
+    <div class="bg-white rounded-lg shadow p-6 mb-6">
+        <div class="flex items-start gap-4">
+            <img src="{{ object.image.url }}" alt="{{ object.title }}"
+                 class="w-32 h-24 object-cover rounded border">
+            <div class="flex-1">
+                <h3 class="text-xl font-bold text-gray-800 mb-2">{{ object.title }}</h3>
+                <div class="text-sm text-gray-600 space-y-1">
+                    <p>📊 แสดงไปแล้ว: {{ object.view_count }} ครั้ง</p>
+                    <p>🖱️ คลิก: {{ object.click_count }} ครั้ง ({{ object.click_rate }}%)</p>
+                    <p>📅 สร้างเมื่อ: {{ object.created_at|date:"d M Y H:i" }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Form -->
+    <form method="post">
+        {% csrf_token %}
+        <div class="flex items-center justify-end space-x-3">
+            <a href="{% url 'management:popup_list' %}"
+               class="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition">
+                ยกเลิก
+            </a>
+            <button type="submit"
+                    class="px-6 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition flex items-center">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                </svg>
+                ยืนยันการลบ
+            </button>
+        </div>
+    </form>
+
+</div>
+{% endblock %}

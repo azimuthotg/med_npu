@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block title %}ผลงานวิจัย - {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+<article class="py-12">
+    <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto">
+
+            <!-- Breadcrumb -->
+            <nav class="mb-6 text-sm">
+                <ol class="flex items-center gap-2 text-gray-500">
+                    <li><a href="{% url 'core:home' %}" class="hover:text-primary-500">หน้าหลัก</a></li>
+                    <li>/</li>
+                    <li><a href="{% url 'core:research_services' %}" class="hover:text-primary-500">วิจัยและบริการวิชาการ</a></li>
+                    <li>/</li>
+                    <li class="text-gray-800">ผลงานวิจัย</li>
+                </ol>
+            </nav>
+
+            <!-- Header -->
+            <header class="mb-8">
+                <div class="flex items-center mb-4">
+                    <div class="w-16 h-16 bg-primary-100 rounded-lg flex items-center justify-center mr-4">
+                        <svg class="w-8 h-8 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h1 class="text-3xl md:text-4xl font-bold text-gray-800">ผลงานวิจัย</h1>
+                        <p class="text-gray-600">Publications</p>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content -->
+            <div class="prose prose-lg max-w-none">
+                <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
+                    <p class="text-blue-800 mb-0">
+                        <strong>📌 หน้านี้อยู่ระหว่างการพัฒนา</strong><br>
+                        รายการผลงานวิจัยและบทความที่ตีพิมพ์จะถูกเพิ่มเติมในอนาคต
+                    </p>
+                </div>
+
+                <p class="lead">บทความวิจัยและผลงานตีพิมพ์ของคณาจารย์และนักวิจัย คณะแพทยศาสตร์ มหาวิทยาลัยนครพนม</p>
+
+                <h2>ฐานข้อมูลวารสารวิชาการ</h2>
+                <ul>
+                    <li><strong>PubMed / MEDLINE</strong> - ฐานข้อมูลวารสารการแพทย์ระดับนานาชาติ</li>
+                    <li><strong>Scopus</strong> - ฐานข้อมูลการอ้างอิงและดัชนีวารสาร</li>
+                    <li><strong>TCI (Thai-Journal Citation Index)</strong> - ฐานข้อมูลวารสารไทย</li>
+                    <li><strong>Google Scholar</strong> - การค้นหาบทความทางวิชาการ</li>
+                </ul>
+
+                <h2>หมวดหมู่ผลงาน</h2>
+                <div class="grid md:grid-cols-2 gap-4 not-prose">
+                    <div class="bg-white border border-gray-200 rounded-lg p-4">
+                        <h4 class="font-semibold text-gray-800 mb-2">📝 บทความวิจัยฉบับเต็ม</h4>
+                        <p class="text-sm text-gray-600 mb-0">Original Article / Research Article</p>
+                    </div>
+                    <div class="bg-white border border-gray-200 rounded-lg p-4">
+                        <h4 class="font-semibold text-gray-800 mb-2">📊 บทความวิจัยสั้น</h4>
+                        <p class="text-sm text-gray-600 mb-0">Brief Communication / Short Report</p>
+                    </div>
+                    <div class="bg-white border border-gray-200 rounded-lg p-4">
+                        <h4 class="font-semibold text-gray-800 mb-2">📖 บทความปริทัศน์</h4>
+                        <p class="text-sm text-gray-600 mb-0">Review Article</p>
+                    </div>
+                    <div class="bg-white border border-gray-200 rounded-lg p-4">
+                        <h4 class="font-semibold text-gray-800 mb-2">👨‍⚕️ รายงานผู้ป่วย</h4>
+                        <p class="text-sm text-gray-600 mb-0">Case Report</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</article>
+{% endblock %}

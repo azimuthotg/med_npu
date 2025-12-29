@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}การรับสมัคร - {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+<section class="py-12 bg-primary-50">
+    <div class="container mx-auto px-4">
+        <h1 class="text-3xl font-bold text-gray-800 mb-2">การรับสมัครนักศึกษา</h1>
+        <p class="text-gray-500">ประกาศรับสมัครนักศึกษาแพทย์</p>
+    </div>
+</section>
+
+<section class="py-12">
+    <div class="container mx-auto px-4">
+        <div class="space-y-6">
+            {% for admission in admissions %}
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex flex-col md:flex-row md:items-center gap-6">
+                <div class="flex-shrink-0">
+                    <div class="w-20 h-20 bg-primary-100 rounded-2xl flex items-center justify-center">
+                        <span class="text-4xl">📋</span>
+                    </div>
+                </div>
+                <div class="flex-1">
+                    <div class="flex items-center gap-2 mb-2">
+                        {% if admission.is_open %}
+                        <span class="inline-block px-3 py-1 bg-green-100 text-green-600 rounded-full text-xs font-medium">เปิดรับสมัคร</span>
+                        {% else %}
+                        <span class="inline-block px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-xs font-medium">ปิดรับสมัคร</span>
+                        {% endif %}
+                        <span class="text-sm text-gray-500">{{ admission.round_name }}</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2">{{ admission.title }}</h3>
+                    <p class="text-gray-500 text-sm">
+                        รับสมัคร: {{ admission.start_date|date:"j M Y" }} - {{ admission.end_date|date:"j M Y" }}
+                        {% if admission.quota %} • จำนวนรับ {{ admission.quota }} คน{% endif %}
+                    </p>
+                </div>
+                <div class="flex gap-3">
+                    {% if admission.announcement_file %}
+                    <a href="{{ admission.announcement_file.url }}" target="_blank" class="px-4 py-2 border border-gray-200 rounded-lg hover:bg-gray-50 transition text-sm">
+                        ประกาศ
+                    </a>
+                    {% endif %}
+                    {% if admission.apply_url and admission.is_open %}
+                    <a href="{{ admission.apply_url }}" target="_blank" class="px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition text-sm">
+                        สมัครเลย
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+            {% empty %}
+            <div class="text-center py-12 text-gray-500">
+                <p>ยังไม่มีประกาศรับสมัคร</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

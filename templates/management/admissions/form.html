@@ -1,0 +1,31 @@
+{% extends 'management/base.html' %}
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <a href="{% url 'management:admission_list' %}" class="text-primary-600 text-sm">← กลับ</a>
+    <h1 class="text-2xl font-bold mt-2">{{ form_title }}</h1>
+    <form method="post" enctype="multipart/form-data" class="mt-6 space-y-6">
+        {% csrf_token %}
+        <div class="bg-white rounded-lg shadow p-6 space-y-4">
+            <div><label class="block text-sm mb-2">หัวข้อ *</label>{{ form.title }}</div>
+            <div class="grid grid-cols-2 gap-4">
+                <div><label class="block text-sm mb-2">หลักสูตร *</label>{{ form.program }}</div>
+                <div><label class="block text-sm mb-2">ปีการศึกษา *</label>{{ form.academic_year }}</div>
+                <div><label class="block text-sm mb-2">รอบการรับสมัคร *</label>{{ form.round_name }}</div>
+                <div><label class="block text-sm mb-2">จำนวนรับ</label>{{ form.quota }}</div>
+                <div><label class="block text-sm mb-2">วันเริ่มรับสมัคร *</label>{{ form.start_date }}</div>
+                <div><label class="block text-sm mb-2">วันสิ้นสุด *</label>{{ form.end_date }}</div>
+            </div>
+            <div><label class="block text-sm mb-2">รายละเอียด</label>{{ form.description }}</div>
+            <div><label class="block text-sm mb-2">คุณสมบัติ</label>{{ form.requirements }}</div>
+            <div><label class="block text-sm mb-2">ไฟล์ประกาศ</label>{{ form.announcement_file }}</div>
+            <div><label class="block text-sm mb-2">ลิงก์สมัคร</label>{{ form.apply_url }}</div>
+            <div class="flex items-center">{{ form.is_active }} <label class="ml-2 text-sm">เปิดรับสมัคร</label></div>
+        </div>
+        <div class="flex justify-between">
+            <a href="{% url 'management:admission_list' %}" class="px-6 py-2 border rounded-lg">ยกเลิก</a>
+            <button type="submit" class="px-6 py-2 bg-primary-600 text-white rounded-lg">{{ submit_text }}</button>
+        </div>
+    </form>
+</div>
+<style>input,select,textarea{width:100%;padding:0.5rem;border:1px solid #d1d5db;border-radius:0.5rem;}textarea{min-height:80px;}</style>
+{% endblock %}

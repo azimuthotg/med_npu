@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}การศึกษา - {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+<section class="py-12 bg-primary-50">
+    <div class="container mx-auto px-4">
+        <h1 class="text-3xl font-bold text-gray-800 mb-2">การศึกษา</h1>
+        <p class="text-gray-500">หลักสูตรและการรับสมัครนักศึกษา</p>
+    </div>
+</section>
+
+<section class="py-12">
+    <div class="container mx-auto px-4">
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <a href="{% url 'education:program_list' %}" class="card-hover bg-white rounded-2xl p-8 shadow-sm border border-gray-100 group">
+                <div class="w-16 h-16 bg-primary-100 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-primary-500 transition">
+                    <span class="text-3xl">📚</span>
+                </div>
+                <h2 class="text-xl font-bold text-gray-800 mb-2 group-hover:text-primary-600 transition">หลักสูตร</h2>
+                <p class="text-gray-500">หลักสูตรที่เปิดสอน</p>
+            </a>
+            
+            <a href="{% url 'education:admission_list' %}" class="card-hover bg-white rounded-2xl p-8 shadow-sm border border-gray-100 group">
+                <div class="w-16 h-16 bg-primary-100 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-primary-500 transition">
+                    <span class="text-3xl">📋</span>
+                </div>
+                <h2 class="text-xl font-bold text-gray-800 mb-2 group-hover:text-primary-600 transition">การรับสมัคร</h2>
+                <p class="text-gray-500">ประกาศรับสมัคร</p>
+            </a>
+            
+            <a href="{% url 'education:calendar' %}" class="card-hover bg-white rounded-2xl p-8 shadow-sm border border-gray-100 group">
+                <div class="w-16 h-16 bg-primary-100 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-primary-500 transition">
+                    <span class="text-3xl">📅</span>
+                </div>
+                <h2 class="text-xl font-bold text-gray-800 mb-2 group-hover:text-primary-600 transition">ปฏิทินการศึกษา</h2>
+                <p class="text-gray-500">กำหนดการสำคัญ</p>
+            </a>
+            
+            <a href="{% url 'education:scholarship' %}" class="card-hover bg-white rounded-2xl p-8 shadow-sm border border-gray-100 group">
+                <div class="w-16 h-16 bg-primary-100 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-primary-500 transition">
+                    <span class="text-3xl">🎓</span>
+                </div>
+                <h2 class="text-xl font-bold text-gray-800 mb-2 group-hover:text-primary-600 transition">ทุนการศึกษา</h2>
+                <p class="text-gray-500">ทุนสำหรับนักศึกษา</p>
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}
