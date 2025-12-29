@@ -38,7 +38,7 @@ urlpatterns = [
 # Debug toolbar - uncomment when needed
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    # Static files served automatically by Django in DEBUG mode from STATICFILES_DIRS
 
     # try:
     #     import debug_toolbar
