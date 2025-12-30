@@ -49,6 +49,18 @@ urlpatterns = [
     path('departments/<int:pk>/edit/', views.DepartmentUpdateView.as_view(), name='department_edit'),
     path('departments/<int:pk>/delete/', views.DepartmentDeleteView.as_view(), name='department_delete'),
 
+    # Personnel Management
+    path('personnel/', views.PersonnelListView.as_view(), name='personnel_list'),
+    path('personnel/create/', views.PersonnelCreateView.as_view(), name='personnel_create'),
+    path('personnel/<int:pk>/edit/', views.PersonnelUpdateView.as_view(), name='personnel_edit'),
+    path('personnel/<int:pk>/delete/', views.PersonnelDeleteView.as_view(), name='personnel_delete'),
+
+    # Responsibility Management
+    path('responsibilities/', views.ResponsibilityListView.as_view(), name='responsibility_list'),
+    path('responsibilities/create/', views.ResponsibilityCreateView.as_view(), name='responsibility_create'),
+    path('responsibilities/<int:pk>/edit/', views.ResponsibilityUpdateView.as_view(), name='responsibility_edit'),
+    path('responsibilities/<int:pk>/delete/', views.ResponsibilityDeleteView.as_view(), name='responsibility_delete'),
+
     # Program Management
     path('programs/', views.ProgramListView.as_view(), name='program_list'),
     path('programs/create/', views.ProgramCreateView.as_view(), name='program_create'),

@@ -1,5 +1,14 @@
 from django.contrib import admin
-from .models import Executive, Department, Personnel
+from .models import Executive, Department, Personnel, Responsibility
+
+
+@admin.register(Responsibility)
+class ResponsibilityAdmin(admin.ModelAdmin):
+    list_display = ('name', 'order', 'is_active')
+    list_filter = ('is_active',)
+    search_fields = ('name', 'description')
+    list_editable = ('order', 'is_active')
+    ordering = ('order',)
 
 
 @admin.register(Executive)
@@ -27,3 +36,4 @@ class PersonnelAdmin(admin.ModelAdmin):
     search_fields = ('first_name', 'last_name', 'position', 'specialization')
     list_editable = ('order', 'is_active')
     ordering = ('personnel_type', 'order')
+    filter_horizontal = ('responsibilities',)

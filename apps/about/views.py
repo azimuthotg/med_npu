@@ -126,7 +126,31 @@ class PersonnelSupportingStaffView(ListView):
         return Personnel.objects.filter(
             personnel_type='supporting_staff',
             is_active=True
-        ).order_by('order')
+        ).select_related('department', 'department__head').order_by('department__order', 'order')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        # Get all support departments with their heads
+        support_departments = Department.objects.filter(
+            department_type='support',
+            is_active=True
+        ).select_related('head').order_by('order')
+
+        # Group personnel by department
+        departments_with_personnel = []
+        for dept in support_departments:
+            personnel = self.get_queryset().filter(department=dept)
+            departments_with_personnel.append({
+                'department': dept,
+                'personnel': personnel,
+                'count': personnel.count()
+            })
+
+        context['departments_with_personnel'] = departments_with_personnel
+        context['support_departments'] = support_departments
+
+        return context
 
 
 class FacultyBoardView(TemplateView):

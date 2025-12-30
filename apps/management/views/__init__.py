@@ -9,6 +9,8 @@ from .gallery import (
 )
 from .executives import ExecutiveListView, ExecutiveCreateView, ExecutiveUpdateView, ExecutiveDeleteView
 from .departments import DepartmentListView, DepartmentCreateView, DepartmentUpdateView, DepartmentDeleteView
+from .personnel import PersonnelListView, PersonnelCreateView, PersonnelUpdateView, PersonnelDeleteView
+from .responsibilities import ResponsibilityListView, ResponsibilityCreateView, ResponsibilityUpdateView, ResponsibilityDeleteView
 from .programs import (
     ProgramListView, ProgramCreateView, ProgramUpdateView, ProgramDeleteView,
     AdmissionListView, AdmissionCreateView, AdmissionUpdateView, AdmissionDeleteView
@@ -46,6 +48,14 @@ __all__ = [
     'DepartmentCreateView',
     'DepartmentUpdateView',
     'DepartmentDeleteView',
+    'PersonnelListView',
+    'PersonnelCreateView',
+    'PersonnelUpdateView',
+    'PersonnelDeleteView',
+    'ResponsibilityListView',
+    'ResponsibilityCreateView',
+    'ResponsibilityUpdateView',
+    'ResponsibilityDeleteView',
     'ProgramListView',
     'ProgramCreateView',
     'ProgramUpdateView',

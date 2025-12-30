@@ -2,6 +2,22 @@ from django.db import models
 from apps.core.models import TimeStampedModel
 
 
+class Responsibility(TimeStampedModel):
+    """หน้าที่ความรับผิดชอบ"""
+    name = models.CharField('ชื่อหน้าที่', max_length=200)
+    description = models.TextField('รายละเอียด', blank=True)
+    order = models.PositiveIntegerField('ลำดับการแสดง', default=0)
+    is_active = models.BooleanField('ใช้งาน', default=True)
+
+    class Meta:
+        verbose_name = 'หน้าที่ความรับผิดชอบ'
+        verbose_name_plural = 'หน้าที่ความรับผิดชอบ'
+        ordering = ['order', 'name']
+
+    def __str__(self):
+        return self.name
+
+
 class Executive(TimeStampedModel):
     """ผู้บริหาร"""
     POSITION_CHOICES = [
@@ -62,7 +78,12 @@ class Personnel(TimeStampedModel):
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
-        verbose_name='ภาควิชา'
+        verbose_name='ภาควิชา/ฝ่าย'
+    )
+    responsibilities = models.ManyToManyField(
+        'Responsibility',
+        blank=True,
+        verbose_name='ปฏิบัติหน้าที่'
     )
     specialization = models.CharField('ความเชี่ยวชาญ', max_length=200, blank=True)
     education = models.TextField('วุฒิการศึกษา', blank=True)
